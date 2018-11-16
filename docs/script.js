@@ -7,7 +7,7 @@
     var ravenclaw = document.getElementById('ravenclaw');
     var hufflepuff = document.getElementById('hufflepuff');
 
-    var b1 = new Image();
+    var b1 = new Image(400,400);
     b1.src = '/images/hp-bg1.png';
     var b2 = new Image();
     b2.src = '/images/hp-bg2.png';
@@ -17,16 +17,16 @@
     b4.src = '/images/hp-bg4.png';
 
     griffindor.onclick = () =>{
-        b1.onload = document.body.style.backgroundImage = "url('/images/hp-bg1.png')"
+        b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')"
     };
     slytherin.onclick = () =>{
-        b2.onload = document.body.style.backgroundImage = "url('/images/hp-bg2.png')"
+        b2.onload = document.body.style.backgroundImage = "url('./images/hp-bg2.png')"
     };
     ravenclaw.onclick = () =>{
-        b3.onload = document.body.style.backgroundImage = "url('/images/hp-bg3.png')"
+        b3.onload = document.body.style.backgroundImage = "url('./images/hp-bg3.png')"
     };
     hufflepuff.onclick = () =>{
-        b4.onload = document.body.style.backgroundImage = "url('/images/hp-bg4.png')"
+        b4.onload = document.body.style.backgroundImage = "url('./images/hp-bg4.png')"
     };
 
     function roundedRect(ctx, x, y, width, height, radius) {
