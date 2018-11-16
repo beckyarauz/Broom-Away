@@ -8,13 +8,13 @@
     var hufflepuff = document.getElementById('hufflepuff');
 
     var b1 = new Image(400,400);
-    b1.src = '/images/hp-bg1.png';
+    b1.src = './images/hp-bg1.png';
     var b2 = new Image();
-    b2.src = '/images/hp-bg2.png';
+    b2.src = './images/hp-bg2.png';
     var b3 = new Image();
-    b3.src = '/images/hp-bg3.png';
+    b3.src = './images/hp-bg3.png';
     var b4 = new Image();
-    b4.src = '/images/hp-bg4.png';
+    b4.src = './images/hp-bg4.png';
 
     griffindor.onclick = () =>{
         b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')"
