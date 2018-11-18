@@ -2,6 +2,8 @@ window.addEventListener("load", function (event) {
     var w = window.innerWidth;
     var h = window.innerHeight;
 
+    console.log(w,h);
+
     var intro = document.getElementById('intro');
     var username = document.getElementById('username');
     var game = document.getElementById('game');
@@ -72,8 +74,10 @@ window.addEventListener("load", function (event) {
     var b4 = new Image();
     b4.src = './images/hp-bg4.png';
 
-    var bg = new Image();
-    bg.src = './images/cloudy-bg-sml.png';
+    var bgBig = new Image();
+    bgBig.src = './images/cloudy-bg-sml.png';
+    var bgSmall = new Image();
+    bgSmall.src = './images/cloudy-bg-iphone.png';
     var icon = new Image();
     icon.src = './images/broom.png';
     // var dementor = new Image();
@@ -165,7 +169,7 @@ window.addEventListener("load", function (event) {
     };
 
     background = {
-        img: bg,
+        img: bgBig,
         x: 0,
         speed: -1,
         move: function () {
@@ -462,7 +466,7 @@ window.addEventListener("load", function (event) {
 
     function Life() {
         this.update = (space) => {
-            ctx.drawImage(star, 230 + space, 450, 30, 30);
+            ctx.drawImage(star, 230 + space, gameBoard.canvas.height - 50, 30, 30);
         };
     };
 
@@ -478,12 +482,12 @@ window.addEventListener("load", function (event) {
         };
     }
 
-    var upDir = new Control(upC,70,340,70,70,'up control');
-    var rightDir = new Control(rightC,115,375,70,70,'right control');
-    var leftDir = new Control(leftC,25,375,70,70,'left control');
-    var downDir = new Control(downC,70,415,70,70,'down control');
+            var upDir;
+            var rightDir;
+            var leftDir ;
+            var downDir ;
 
-    var controls = [upDir,rightDir,leftDir,downDir];
+            var controls;
 
     function drawControls() {
         controls.forEach((control) => {
@@ -620,8 +624,14 @@ window.addEventListener("load", function (event) {
     gameBoard = {
         canvas: document.createElement("canvas"),
         start: function () {
-            this.canvas.width = 750;
-            this.canvas.height = 500;
+            if (window.matchMedia("(max-height: 376px)").matches) {
+                this.canvas.width = 660;
+                this.canvas.height = 370;
+                background.img = bgSmall;
+            } else {
+                this.canvas.width = 750;
+                this.canvas.height = 500;
+            };
             ctx = this.canvas.getContext("2d");
             document.getElementById('game').appendChild(this.canvas);
             for (let i = 0; i < player.lives; i++) {
@@ -631,6 +641,12 @@ window.addEventListener("load", function (event) {
             ranBoss = Math.ceil(Math.random() * (4));
             boss = new Image();
             boss.src = './images/boss-' + ranBoss + '.png';
+            upDir = new Control(upC, 70, gameBoard.canvas.height - 150, 70, 70, 'up control');
+            rightDir = new Control(rightC, 110, gameBoard.canvas.height - 115, 70, 70, 'right control');
+            leftDir = new Control(leftC, 30, gameBoard.canvas.height - 115, 70, 70, 'left control');
+            downDir = new Control(downC, 70, gameBoard.canvas.height - 75, 70, 70, 'down control');
+
+            controls = [upDir, rightDir, leftDir, downDir];
         },
         clear: function () {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -645,7 +661,7 @@ window.addEventListener("load", function (event) {
 
             ctx.font = '18px monospace';
             ctx.fillStyle = 'black';
-            ctx.fillText('Score: ' + this.points, 350, 50);
+            ctx.fillText('Score: ' + this.points, this.canvas.width *0.5 - 30, 50);
         },
         gameTime: 0,
         pause: false,
@@ -675,8 +691,11 @@ window.addEventListener("load", function (event) {
             ctx.font = '16px monospace';
             ctx.fillText('your final score is: ' + gameBoard.points, 290, 300);
         }
-
     };
+    
+    //   else {
+    //     /* the viewport is less than 400 pixels wide */
+    //   }
 
     function isIntersect(point,control,x,y){
         if(point.x >= control.x && point.x <= (control.x + control.width)){
@@ -689,7 +708,7 @@ window.addEventListener("load", function (event) {
             return true;
         }
     };
-
+    
     gameBoard.canvas.addEventListener('touchstart', process_touchstart, false);
     gameBoard.canvas.addEventListener('touchmove', process_touchmove, false);
     

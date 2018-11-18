@@ -11,7 +11,7 @@ body{
     flex-direction: column;
     margin:0;
 }
-body,#intro,#game,#bosses,.row,.round,.c-round,.container{
+body,#intro,#game,#bosses,.row,.round,.c-round,.container,.first{
     justify-content: center;
     align-items: center;
 }
@@ -41,6 +41,10 @@ button:hover{
 }
 .container div{
     margin:3px;
+}
+
+.first{
+    justify-content: space-between;
 }
 
 .back ,.next, #to-start{
@@ -138,7 +142,7 @@ h2{
 
 #intro, #rules-1,#rules-2,#rules-3{
     position: relative;
-    width: 60vw;
+    width: 80vw;
     min-width: 550px;
     height: 80vh;
     padding:20px;
@@ -194,9 +198,7 @@ h2{
 .dark{
     background-color: rgb(41, 150, 122);
 }
-.boss{
-    margin:20px;
-}
+
 .enemy{
     height:60px;
     width:40px;
@@ -219,6 +221,10 @@ h2{
 #bosses{
     margin-top: 20px;
     width: 100%;
+}
+
+#bosses .row{
+    justify-content: space-evenly;
 }
 
 .owl{
