@@ -5,14 +5,19 @@
 body{
     background-image: url('../images/hw-bg1.jpg');
     background-position: center;
-    /* background-size: cover; */
     background-repeat: repeat;
     background-size: 400px 400px;
     height: 100vh;
-    /* background-size: auto; */
     flex-direction: column;
+    margin:0;
+}
+body,#intro,#game,#bosses,.row,.round,.c-round,.container{
     justify-content: center;
     align-items: center;
+}
+* p{
+    margin:0;
+    font-size: 1.1rem;
 }
 
 button{
@@ -21,33 +26,131 @@ button{
     padding: 10px;
     font-size: 20px;
     font-family: monospace;
+    margin: 0 20px;
 }
 
-#start:hover{
+button:hover{
     background-color: brown;
     color: white;
 }
-h1{
-    margin:0;
-    font-size: 80px;
-    font-family: "Harry P";
-    color: rgb(201, 199, 199);
-    text-shadow: 4px 3px 10px rgba(46, 42, 23, 0.94);
-    animation: float 6s ease-in-out infinite;
+
+.container{
+    min-width: 150px;
+    max-width: 150px;
+    margin-right: 25px;
+}
+.container div{
+    margin:3px;
 }
 
-#intro{
+.back ,.next, #to-start{
+    position: absolute;
+    bottom: 30px;
+}
+.next, #to-start{
+    right:40px;
+}
+
+/* svg resize */
+.svg-arrow{
+    height: 32px;
+    width: 32px;
+}
+
+#to-start{
+    min-width: 65px;
+    max-width: 65px;
+    max-height: 65px;
+}
+
+#controls{
+    justify-content: space-around;
+    padding: 20px;
+    margin: 0;
+}
+#controls img {
+    height: 50px;
+    width:50px;
+}
+
+#phone-controls, #keyboard-controls{
+    width:230px;
+}
+
+#keyboard-controls{
+    align-items: center;
+}
+
+.c-round{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: antiquewhite;
+    margin: 5px 2px;
+}
+
+#wand{
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+#wand-icon{
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.c-round:hover{
+    background-color: white;
+}
+
+#space-key{
+    height: 40px;
+    width: 150px;
+    background-color: antiquewhite;
+    margin:10px;
+    margin-bottom: 15px;
+}
+.arrow-keys{
+    flex-direction: column;
+    align-items: center;
+}
+.arrow{
+    padding: 3px;
+    text-align: center;
+    width:40px;
+    height: 40px;
+    margin:5px 0;
+}
+
+h1,h2{
+    margin:0;
+    font-family: "Harry P";
+    color: rgb(218, 216, 216);
+    animation: float 6s ease-in-out infinite;
+}
+h1{
+    text-shadow: 4px 3px 10px rgba(46, 42, 23, 0.94);
+    font-size: 80px;
+}
+h2{
+    font-size: 60px;
+}
+
+#intro, #rules-1,#rules-2,#rules-3{
+    position: relative;
     width: 60vw;
     min-width: 550px;
     height: 80vh;
     padding:20px;
     border-radius: 15px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background-image: url(../images/bricks2.jpg);
     background-size: cover;
 }
+
+.width-stretch{
+    width:100%;
+}
+
 #houses{
     margin-bottom: 20px;
     flex-wrap: wrap;
@@ -60,30 +163,101 @@ h1{
     height: 10em;
 }
 
-#game{
-    justify-content: center;
+.solid-bg{
+    background-color: rgba(0,0,0,0.6);
+    font-family: monospace;
+    border-radius: 15px;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.solid-bg h2 {
+    text-align: center;
+}
+
+.round{
+    border-radius: 50%;
+}
+#to-start img{
+    height: 35px;
+    min-width: 35px;
+    max-width: 35px;
+}
+
+.round:hover{
+    opacity: 0.5;
+}
+
+.light{
+    background-color: beige;
+}
+.dark{
+    background-color: rgb(41, 150, 122);
+}
+.boss{
+    margin:20px;
+}
+.enemy{
+    height:60px;
+    width:40px;
+    margin:10px 20px;
+}
+.wrap{
+    flex-wrap: wrap;
+}
+
+.text{
+    width:300px;
+}
+
+#snitch,#castle{
+    margin:20px 10px;
+    height:20px;
+    width:40px;
+}
+
+#bosses{
+    margin-top: 20px;
+    width: 100%;
+}
+
+.owl{
+    height: 30px;
+    width: 30px;
+    margin:10px;
+}
+#sprites-info{
+    height:100%;;
+    justify-content: space-around;
     align-items: center;
 }
-
-@keyframes float {
-	0% {
-		text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
-	50% {
-		text-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
-		transform: translatey(-15px);
-	}
-	100% {
-		text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
-}
-
 .flex{
     display: flex;
 }
 
+.flex-column{
+    flex-direction: column;
+}
+.row{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 .hide{
     display: none;
+}
+
+@keyframes float {
+	0% {
+		/* text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+		transform: translatey(0px);
+	}
+	50% {
+		/* text-shadow: 0 25px 15px 0px rgba(0,0,0,0.2); */
+		transform: translatey(-15px);
+	}
+	100% {
+		/* text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+		transform: translatey(0px);
+	}
 }

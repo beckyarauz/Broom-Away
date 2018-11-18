@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style-svg.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Broom Away</title>
 </head>
+
 <body class="flex">
-    <section id="intro" class="flex">
+
+    <div id="svg-html" style="display: none;"></div>
+
+    <section id="intro" class="flex flex-column">
         <h1>Choose your House</h1>
         <div id="houses" class="flex">
             <img id="griffindor" class="house" src="./images/house-g.png" alt="griffindor">
@@ -17,12 +24,183 @@
             <img id="ravenclaw" class="house" src="./images/house-r.png" alt="ravenclaw">
             <img id="hufflepuff" class="house" src="./images/house-h.png" alt="hufflepuff">
         </div>
-        <button id="start">Start Game</button>
+        <div class="btns flex">
+            <button id="start">Start Game</button>
+            <button id="instructions">Intructions</button>
+        </div>
+
+    </section>
+    <section id="rules-1" class="flex hide">
+        <div class="solid-bg width-stretch">
+            <h2>You are a Wizzard <span id="username"></span>!</h2>
+
+            <p>So now that you know, you have a BIG task: <b>defeat the dark side!</b></p>
+            <p>Here are some tips that will help you achieve that goal:</p>
+            <p>Use the <b>arrow keys</b> or the <b>arrow buttons</b> to move the broom around</p>
+            <div id="controls" class="flex wrap">
+                <!-- <div id="phone-controls">
+                    <div class="flex arrow-keys">
+                        <div class="row">
+                            <div class="c-round flex">
+                                <img src="./images/c-up.png" alt="">
+                            </div>
+                        </div>
+                        <div class="row flex">
+                            <div class="c-round flex">
+                                <img src="./images/c-left.png" alt="">
+                            </div>
+                            <div class="c-round flex">
+                                <img src="./images/c-down.png" alt="">
+                            </div>
+                            <div class="c-round flex">
+                                <img src="./images/c-right.png" alt="">
+                            </div>
+                        </div>
+                        <div id="wand" class="c-round flex">
+                            <img id="wand-icon" src="./images/magic-wand.png" alt="">
+                        </div>
+                        <div>
+                            <p>Press the <b>WAND</b> button to shoot spells at your enemies</p>
+                        </div>
+                    </div>
+                </div> -->
+                <div id="keyboard-controls" class="flex flex-column">
+                    <div class="flex arrow-keys">
+                        <div class="row">
+                            <button class="arrow">⇡</button>
+                        </div>
+                        <div class="row">
+                            <button class="arrow">⇠</button>
+                            <button class="arrow">⇣</button>
+                            <button class="arrow">⇢</button>
+                        </div>
+                    </div>
+                    <button id="space-key">SPACE</button>
+                    <p>Press the <b>SPACE</b> key to shoot spells at your enemies</p>
+                </div>
+            </div>
+            <div id="backBtn1" class="back">
+                <svg class="svg-arrow">
+                    <use xlink:href="#leftarrow"></use>
+                </svg>
+            </div>
+            <div id="nextBtn1" class="next">
+                <svg class="svg-arrow">
+                    <use xlink:href="#rightarrow"></use>
+                </svg>
+            </div>
+        </div>
+    </section>
+    <section id="rules-2" class="flex hide">
+        <div class="solid-bg width-stretch flex flex-column">
+            <h2>Friends and Enemies</h2>
+            <div id="sprites-info" class="flex flex-column">
+                <div id="info-dementor" class="row flex">
+                    <div class="container flex">
+                        <div class="round light flex">
+                            <img class="enemy" src="./images/dem2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="text">
+                        <p>Be Careful of Dementors! They work for the Dark Lord
+                            so stay away from them or you'll lose <b>200 points</b> and will cost you a life</p>
+                    </div>
+                </div>
+                <div id="info-owls" class="row flex">
+                    <div class="container flex wrap">
+                        <div class="round dark flex">
+                            <img class="owl" src="./images/owl-1.png" alt="">
+                        </div>
+                        <div class="round light flex">
+                            <img class="owl" src="./images/owl-2.png" alt="">
+                        </div>
+                        <div class="round dark flex">
+                            <img class="owl" src="./images/owl-3.png" alt="">
+                        </div>
+                    </div>
+                    <div class="text">
+                        <p>But don't worry Owls come for your aid!
+                            So you better catch up with them to gain back
+                            the lives you have lost or earn <b>250 points</b>.</p>
+                    </div>
+                </div>
+                <div id="info-snitch" class="row flex">
+                    <div class="container flex">
+                        <div class="round dark flex">
+                            <img id="snitch" src="./images/snitch1.png" alt="">
+                        </div>
+                    </div>
+                    <div class="text">
+                        <p>Don't forget to collect the Golden Snitches!
+                            Each will give you <b>150 points</b>!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="backBtn2" class="back">
+                <svg class="svg-arrow">
+                    <use xlink:href="#leftarrow"></use>
+                </svg>
+            </div>
+            <div id="nextBtn2" class="next">
+                <svg class="svg-arrow">
+                    <use xlink:href="#rightarrow"></use>
+                </svg>
+            </div>
+        </div>
+    </section>
+    <section id="rules-3" class="flex hide">
+        <div class="solid-bg width-stretch">
+            <h2>Final Boss</h2>
+            <p>When you reach the final stage you will
+                encounter one of these evil wizzards:</p>
+            <div id="bosses" class="flex wrap">
+                <div class="row flex">
+                    <div class="round light flex boss">
+                        <img class="enemy" src="./images/boss-1.png" alt="">
+                    </div>
+                    <div class="round light flex boss">
+                        <img class="enemy" src="./images/boss-2.png" alt="">
+                    </div>
+                </div>
+                <div class="row flex">
+                    <div class="round light flex  boss">
+                        <img class="enemy" src="./images/boss-3.png" alt="">
+                    </div>
+                    <div class="round light flex boss">
+                        <img class="enemy" src="./images/boss-4.png" alt="">
+                    </div>
+                </div>
+                <p>Shoot some <b>spells</b> until you defeat
+                    them and you'll be a champion!</p>
+            </div>
+            <div id="backBtn3" class="back">
+                <svg class="svg-arrow">
+                    <use xlink:href="#leftarrow"></use>
+                </svg>
+            </div>
+            <div id="to-start" class="round flex light">
+                <img id="castle" src="./images/castle.png" alt="">
+            </div>
+            <!-- <button id="to-start" class="to-start"><span>Back to Start</span></button> -->
+        </div>
     </section>
     <section id="game" class="flex">
     </section>
-    
+
 </body>
-<!-- <script src="./scripts/setup.js"></script> -->
+<script src="/setup/domElements.js"></script>
+<script src="/setup/variables.js"></script>
+<script src="/setup/images.js"></script>
+<script src="/setup/canvas-setup.js"></script>
+
+<script src="/setup/classes.js"></script>
+<script src="/setup/key-events.js"></script>
+<script src="/setup/svg.js"></script>
+<script src="/setup/crashes.js"></script>
+<script src="/setup/sprite-generators.js"></script>
+<script src="/setup/click-handlers.js"></script>
 <script src="script.js"></script>
+
+
 </html>
