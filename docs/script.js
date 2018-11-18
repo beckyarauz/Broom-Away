@@ -1,4 +1,7 @@
 window.addEventListener("load", function (event) {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+
     var intro = document.getElementById('intro');
     var username = document.getElementById('username');
     var game = document.getElementById('game');
@@ -82,26 +85,35 @@ window.addEventListener("load", function (event) {
     var star = new Image();
     star.src = './images/star.png';
 
+    //controls for ipad
+    var rightC = new Image();
+    rightC.src = './images/c-right.png';
+    var upC = new Image();
+    upC.src = './images/c-up.png';
+    var downC = new Image();
+    downC.src = './images/c-down.png';
+    var leftC = new Image();
+    leftC.src = './images/c-left.png';
+
     griffindor.onclick = () => {
         soundStop();
         tone2.onload = tone2.play();
-        b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')"
-        
+        b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')";
     };
     slytherin.onclick = () => {
         soundStop();
         tone2.play();
-        b2.onload = document.body.style.backgroundImage = "url('./images/hp-bg2.png')"
+        b2.onload = document.body.style.backgroundImage = "url('./images/hp-bg2.png')";
     };
     ravenclaw.onclick = () => {
         soundStop();
         tone2.play();
-        b3.onload = document.body.style.backgroundImage = "url('./images/hp-bg3.png')"
+        b3.onload = document.body.style.backgroundImage = "url('./images/hp-bg3.png')";
     };
     hufflepuff.onclick = () => {
         soundStop();
         tone2.play();
-        b4.onload = document.body.style.backgroundImage = "url('./images/hp-bg4.png')"
+        b4.onload = document.body.style.backgroundImage = "url('./images/hp-bg4.png')";
     };
 
     instButton.onclick = () => {
@@ -454,6 +466,31 @@ window.addEventListener("load", function (event) {
         };
     };
 
+    function Control(direction,x,y,height,width,name){
+        this.id = name;
+        this.x = x;
+        this.y = y;
+        this.height =height;
+        this.width = width;
+        this.direction = direction;
+        this.update = () => {
+            ctx.drawImage(direction, this.x, this.y,this.height,this.width);
+        };
+    }
+
+    var upDir = new Control(upC,70,340,70,70,'up control');
+    var rightDir = new Control(rightC,115,375,70,70,'right control');
+    var leftDir = new Control(leftC,25,375,70,70,'left control');
+    var downDir = new Control(downC,70,415,70,70,'down control');
+
+    var controls = [upDir,rightDir,leftDir,downDir];
+
+    function drawControls() {
+        controls.forEach((control) => {
+            control.update();
+        });
+    } ;
+
     function keyHandlers() {
         document.onkeydown = function (e) {
             switch (e.keyCode) {
@@ -473,7 +510,9 @@ window.addEventListener("load", function (event) {
         };
 
         document.onkeyup = function (e) {
-            player.stopMove();
+            if(player != undefined){
+                player.stopMove();
+            }
         };
     };
 
@@ -559,7 +598,6 @@ window.addEventListener("load", function (event) {
         };
     };
 
-
     startButton.onclick = () => {
         soundStop();
         tone3.play();
@@ -578,8 +616,6 @@ window.addEventListener("load", function (event) {
             updateGameArea();
         };
     };
-
-    keyHandlers();
 
     gameBoard = {
         canvas: document.createElement("canvas"),
@@ -615,10 +651,10 @@ window.addEventListener("load", function (event) {
         pause: false,
         boundaries: () => {
             if (player.x >= gameBoard.canvas.width - player.width) {
-                player.x = gameBoard.canvas.width - player.width;
+                player.x = gameBoard.canvas.width - player.width -20;
             }
             if (player.y >= gameBoard.canvas.height - player.height) {
-                player.y = gameBoard.canvas.height - player.height;
+                player.y = gameBoard.canvas.height - player.height - 20;
             }
             if (player.x < 0) {
                 player.x = 0;
@@ -642,8 +678,68 @@ window.addEventListener("load", function (event) {
 
     };
 
-    function updateGameArea() {
+    function isIntersect(point,control,x,y){
+        if(point.x >= control.x && point.x <= (control.x + control.width)){
+            x = true;
+        };
+        if(point.y >= control.y && point.y <= (control.y + control.height)){
+            y = true;
+        };
+        if(x && y){
+            return true;
+        }
+    };
 
+    gameBoard.canvas.addEventListener('touchstart', process_touchstart, false);
+    gameBoard.canvas.addEventListener('touchmove', process_touchmove, false);
+    
+    // touchstart handler
+    var onGoingTouch = false;
+
+    function process_touchmove(ev) {
+        ev.preventDefault();
+      }
+    function process_touchend(ev) {
+        onGoingTouch = false;
+        player.stopMove();
+        ev.preventDefault();
+      }
+    function process_touchstart(ev) {
+        gameBoard.canvas.addEventListener('touchend', process_touchend, false);
+        onGoingTouch = true;
+        process_touchmove(ev);
+
+        var x = false;
+        var y = false;
+        const mousePoint = {
+            x: ev.touches[0].clientX - ((w - gameBoard.canvas.width) / 2),
+            y: ev.touches[0].clientY - ((h - gameBoard.canvas.height) / 2),
+        };
+
+        controls.forEach(control => {
+            if (isIntersect(mousePoint, control, x, y)) {
+                switch (control) {
+                    case upDir:
+                    if(onGoingTouch){
+                        player.moveUp();
+                    };
+                        break;
+                    case downDir:
+                        player.moveDown();
+                        break;
+                    case leftDir:
+                        player.moveLeft();
+                        break;
+                    case rightDir:
+                        player.moveRight();
+                        break;
+                };
+            };
+        });
+    };
+
+    function updateGameArea() {
+        keyHandlers();
         gameBoard.boundaries();
         gameBoard.frames++;
 
@@ -662,7 +758,9 @@ window.addEventListener("load", function (event) {
         snitchCrash();
         //when a player crashes with an owl
         owlCrash();
+
         drawLives();
+        drawControls();
 
         dementorGenerator();
         snitchGenerator();
