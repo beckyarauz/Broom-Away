@@ -14,7 +14,7 @@ window.addEventListener("load", function (event) {
 
     var startButton = document.getElementById('start');
     var instButton = document.getElementById('instructions');
-
+    //normal index
     var rules1 = document.getElementById('rules-1');
     var rules2 = document.getElementById('rules-2');
     var rules3 = document.getElementById('rules-3');
