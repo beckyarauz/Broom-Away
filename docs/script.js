@@ -40,6 +40,26 @@ window.addEventListener("load", function (event) {
     var owls = [];
     var bossArr = [];
 
+    var owlTone = new Audio('./sounds/tone-1.mp3');
+    var coinTone = new Audio('./sounds/coin-1.mp3');
+    var coinTone2 = new Audio('./sounds/coin-2.mp3');
+    var tone2 = new Audio('./sounds/tone-2.mp3');
+    var tone3 = new Audio('./sounds/tone-3.mp3');
+    var click1 = new Audio('./sounds/click-1.mp3');
+    var gameover = new Audio('./sounds/gameover.mp3');
+    var crash = new Audio('./sounds/crash.mp3');
+    
+    
+    function soundStop() {
+        let sounds = [owlTone, coinTone, coinTone2, tone2, tone3, crash,click1];
+        for (let i = 0; i < sounds.length; i++) {
+            if (sounds[i].currentTime > 0) {
+                sounds[i].pause();
+                sounds[i].currentTime = 0;
+            }
+        }
+    }
+
     var b1 = new Image(400, 400);
     b1.src = './images/hp-bg1.png';
     var b2 = new Image();
@@ -63,19 +83,30 @@ window.addEventListener("load", function (event) {
     star.src = './images/star.png';
 
     griffindor.onclick = () => {
+        soundStop();
+        tone2.play();
         b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')"
+        
     };
     slytherin.onclick = () => {
+        soundStop();
+        tone2.play();
         b2.onload = document.body.style.backgroundImage = "url('./images/hp-bg2.png')"
     };
     ravenclaw.onclick = () => {
+        soundStop();
+        tone2.play();
         b3.onload = document.body.style.backgroundImage = "url('./images/hp-bg3.png')"
     };
     hufflepuff.onclick = () => {
+        soundStop();
+        tone2.play();
         b4.onload = document.body.style.backgroundImage = "url('./images/hp-bg4.png')"
     };
 
     instButton.onclick = () => {
+        soundStop();
+        click1.play();
         intro.classList.add('hide');
         rules1.classList.remove('hide');
         if (name == undefined) {
@@ -87,26 +118,38 @@ window.addEventListener("load", function (event) {
     nextBtn1.onclick = () => {
         rules1.classList.add('hide');
         rules2.classList.remove('hide');
+        soundStop();
+        click1.play();
     };
     backBtn1.onclick = () => {
         rules1.classList.add('hide');
         intro.classList.remove('hide');
+        soundStop();
+        click1.play();
     };
     nextBtn2.onclick = () => {
         rules2.classList.add('hide');
         rules3.classList.remove('hide');
+        soundStop();
+        click1.play();
     };
     backBtn2.onclick = () => {
         rules2.classList.add('hide');
         rules1.classList.remove('hide');
+        soundStop();
+        click1.play();
     };
     backBtn3.onclick = () => {
         rules3.classList.add('hide');
         rules2.classList.remove('hide');
+        soundStop();
+        click1.play();
     };
     toStart.onclick = () => {
         rules3.classList.add('hide');
         intro.classList.remove('hide');
+        soundStop();
+        tone2.play();
     };
 
     background = {
@@ -174,6 +217,7 @@ window.addEventListener("load", function (event) {
                             sprite.borderTop = false;
                         };
                     }
+                    
                     sprite.update();
                     return;
                 };
@@ -189,6 +233,7 @@ window.addEventListener("load", function (event) {
                     sprite.x < gameBoard.canvas.width - 699 && sprite.x >= gameBoard.canvas.width - 800) {
                     sprite.y++;
                 };
+                sprite.newPos();
                 sprite.update();
             };
         };
@@ -262,8 +307,8 @@ window.addEventListener("load", function (event) {
         };
     };
 
-    function Dementor(x, y, speed) {
-        this.speedX = speed * this.dt;
+    function Dementor(x, y) {
+        this.speedX = 0;
         this.speedY = 0;
         this.x = x;
         this.y = y;
@@ -334,7 +379,7 @@ window.addEventListener("load", function (event) {
     };
 
     function Coin(x, y) {
-        this.speedX = 0;
+        this.speedX = -1;
         this.speedY = 0;
         this.x = x;
         this.y = y;
@@ -439,6 +484,8 @@ window.addEventListener("load", function (event) {
     function dementorCrash() {
         for (i = 0; i < dementors.length; i += 1) {
             if (player.crashWith(dementors[i])) {
+                soundStop();
+                crash.play();
                 dementors.splice(i, 1);
                 gameBoard.points -= 200;
                 player.lives--;
@@ -450,6 +497,8 @@ window.addEventListener("load", function (event) {
     function snitchCrash() {
         for (let i = 0; i < snitchs.length; i += 1) {
             if (player.crashWith(snitchs[i])) {
+                soundStop();
+                coinTone2.play();
                 snitchs.splice(i, 1);
                 gameBoard.points += 150;
             };
@@ -459,6 +508,8 @@ window.addEventListener("load", function (event) {
     function owlCrash() {
         for (let i = 0; i < owls.length; i += 1) {
             if (player.crashWith(owls[i])) {
+                soundStop();
+                owlTone.play();
                 owls.splice(i, 1);
                 if (player.lives < 5) {
                     player.lives++;
@@ -474,7 +525,7 @@ window.addEventListener("load", function (event) {
     function dementorGenerator() {
         if (Math.random() < 1 - Math.pow(.993, gameBoard.frames / 8500)) {
             var y = Math.floor(Math.random() * (gameBoard.canvas.height));
-            var dem = new Dementor(gameBoard.canvas.width, y, background.speed);
+            var dem = new Dementor(gameBoard.canvas.width, y);
             dementors.push(dem);
         };
     };
@@ -510,6 +561,8 @@ window.addEventListener("load", function (event) {
 
 
     startButton.onclick = () => {
+        soundStop();
+        tone3.play();
         intro.classList.remove('flex');
         intro.classList.add('hide');
         game.classList.add('flex');
@@ -575,6 +628,8 @@ window.addEventListener("load", function (event) {
             }
         },
         gameOver: () => {
+            soundStop();
+            gameover.play();
             ctx.fillStyle = 'black';
             roundedRect(ctx, 250, 150, 300, 200, 15);
             ctx.font = '48px monospace';
@@ -626,14 +681,15 @@ window.addEventListener("load", function (event) {
         }
         //make it faster every 1000 frames
 
-        if (gameBoard.frames % (60 * 20) === 0) {
-            background.speed -= 0.8;
-            for (let i = 0; i < dementors.length; i++) {
-                dementors[i].speedX = background.speed;
-                dementors[i].newPos();
-                dementors[i].update();
-            }
-        }
+        // if (gameBoard.frames % (60 * 20) === 0) {
+        //     background.speed -= 0.8;
+        //     for (let i = 0; i < dementors.length; i++) {
+        //         dementors[i].speedX = background.speed;
+        //         dementors[i].newPos();
+        //         dementors[i].update();
+        //     }
+        // };
+
         player.newPos();
         player.update();
         gameBoard.score();
