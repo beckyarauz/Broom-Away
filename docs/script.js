@@ -84,7 +84,7 @@ window.addEventListener("load", function (event) {
 
     griffindor.onclick = () => {
         soundStop();
-        tone2.play();
+        tone2.onload = tone2.play();
         b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')"
         
     };
