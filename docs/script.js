@@ -1,4 +1,58 @@
 window.addEventListener("load", function (event) {
+//https://createjs.com/docs/preloadjs/classes/LoadQueue.html
+
+var queue = new createjs.LoadQueue(true);
+
+let soundObjects = {};
+
+function handleSoundsLoad(event){
+    var item = event.item; 
+    soundObjects[item.id] = new Audio(item.src);
+    // console.log(soundObjects);
+}
+
+function handleSoundsComplete(event){
+    console.log(soundObjects);
+}
+
+var soundFiles = [
+    {
+        id:"click1", src:"/sounds/click-1.mp3", index: 1
+    },
+    {
+        id:"owlTone", src:"/sounds/tone-1.mp3", index: 2
+    },
+    {
+        id:"coinTone", src:"/sounds/coin-1.mp3", index: 3
+    },
+    {
+        id:"tone2", src:"/sounds/tone-2.mp3", index: 4
+    },
+    {
+        id:"tone3", src:"/sounds/tone-3.mp3", index: 5
+    },
+    {
+        id:"gameover", src:"/sounds/gameover.mp3", index: 6
+    },
+    {
+        id:"crash", src:"/sounds/crash.mp3", index: 7
+    },
+];
+queue.loadManifest(soundFiles);
+
+queue.on("fileload", handleSoundsLoad, this);
+queue.on("complete", handleSoundsComplete, this);
+
+function soundStop() {
+    for (sound in soundObjects) {
+        if (soundObjects[sound].currentTime > 0) {
+            soundObjects[sound].pause();
+            soundObjects[sound].currentTime = 0;
+        }
+    }
+}
+
+
     var w = window.innerWidth;
     var h = window.innerHeight;
 
@@ -45,26 +99,6 @@ window.addEventListener("load", function (event) {
     var owls = [];
     var bossArr = [];
 
-    var owlTone = new Audio('./sounds/tone-1.mp3');
-    var coinTone = new Audio('./sounds/coin-1.mp3');
-    var coinTone2 = new Audio('./sounds/coin-2.mp3');
-    var tone2 = new Audio('./sounds/tone-2.mp3');
-    var tone3 = new Audio('./sounds/tone-3.mp3');
-    var click1 = new Audio('./sounds/click-1.mp3');
-    var gameover = new Audio('./sounds/gameover.mp3');
-    var crash = new Audio('./sounds/crash.mp3');
-    
-    
-    function soundStop() {
-        let sounds = [owlTone, coinTone, coinTone2, tone2, tone3, crash,click1];
-        for (let i = 0; i < sounds.length; i++) {
-            if (sounds[i].currentTime > 0) {
-                sounds[i].pause();
-                sounds[i].currentTime = 0;
-            }
-        }
-    }
-
     var b1 = new Image(400, 400);
     b1.src = './images/hp-bg1.png';
     var b2 = new Image();
@@ -101,28 +135,28 @@ window.addEventListener("load", function (event) {
 
     griffindor.onclick = () => {
         soundStop();
-        tone2.onload = tone2.play();
+        soundObjects["tone2"].play();
         b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')";
     };
     slytherin.onclick = () => {
         soundStop();
-        tone2.play();
+        soundObjects["tone2"].play();
         b2.onload = document.body.style.backgroundImage = "url('./images/hp-bg2.png')";
     };
     ravenclaw.onclick = () => {
         soundStop();
-        tone2.play();
+        soundObjects["tone2"].play();
         b3.onload = document.body.style.backgroundImage = "url('./images/hp-bg3.png')";
     };
     hufflepuff.onclick = () => {
         soundStop();
-        tone2.play();
+        soundObjects["tone2"].play();
         b4.onload = document.body.style.backgroundImage = "url('./images/hp-bg4.png')";
     };
 
     instButton.onclick = () => {
         soundStop();
-        click1.play();
+        soundObjects["click1"].play();
         intro.classList.add('hide');
         rules1.classList.remove('hide');
         if (name == undefined) {
@@ -135,37 +169,37 @@ window.addEventListener("load", function (event) {
         rules1.classList.add('hide');
         rules2.classList.remove('hide');
         soundStop();
-        click1.play();
+        soundObjects["click1"].play();
     };
     backBtn1.onclick = () => {
         rules1.classList.add('hide');
         intro.classList.remove('hide');
         soundStop();
-        click1.play();
+        soundObjects["click1"].play();
     };
     nextBtn2.onclick = () => {
         rules2.classList.add('hide');
         rules3.classList.remove('hide');
         soundStop();
-        click1.play();
+        soundObjects["click1"].play();
     };
     backBtn2.onclick = () => {
         rules2.classList.add('hide');
         rules1.classList.remove('hide');
         soundStop();
-        click1.play();
+        soundObjects["click1"].play();
     };
     backBtn3.onclick = () => {
         rules3.classList.add('hide');
         rules2.classList.remove('hide');
         soundStop();
-        click1.play();
+        soundObjects["click1"].play();
     };
     toStart.onclick = () => {
         rules3.classList.add('hide');
         intro.classList.remove('hide');
         soundStop();
-        tone2.play();
+        soundObjects["tone2"].play();
     };
 
     background = {
@@ -528,7 +562,7 @@ window.addEventListener("load", function (event) {
         for (i = 0; i < dementors.length; i += 1) {
             if (player.crashWith(dementors[i])) {
                 soundStop();
-                crash.play();
+                soundObjects["crash"].play();
                 dementors.splice(i, 1);
                 gameBoard.points -= 200;
                 player.lives--;
@@ -541,7 +575,7 @@ window.addEventListener("load", function (event) {
         for (let i = 0; i < snitchs.length; i += 1) {
             if (player.crashWith(snitchs[i])) {
                 soundStop();
-                coinTone2.play();
+                soundObjects["coinTone2"].play();
                 snitchs.splice(i, 1);
                 gameBoard.points += 150;
             };
@@ -552,7 +586,7 @@ window.addEventListener("load", function (event) {
         for (let i = 0; i < owls.length; i += 1) {
             if (player.crashWith(owls[i])) {
                 soundStop();
-                owlTone.play();
+                soundObjects["owlTone"].play();
                 owls.splice(i, 1);
                 if (player.lives < 5) {
                     player.lives++;
@@ -604,7 +638,7 @@ window.addEventListener("load", function (event) {
 
     startButton.onclick = () => {
         soundStop();
-        tone3.play();
+        soundObjects["tone3"].play();
         intro.classList.remove('flex');
         intro.classList.add('hide');
         game.classList.add('flex');
@@ -681,7 +715,7 @@ window.addEventListener("load", function (event) {
         },
         gameOver: () => {
             soundStop();
-            gameover.play();
+            soundObjects["gameover"].play();
             ctx.fillStyle = 'black';
             roundedRect(ctx, 250, 150, 300, 200, 15);
             ctx.font = '48px monospace';
