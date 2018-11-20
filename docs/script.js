@@ -1,4 +1,4 @@
-var queue = new createjs.LoadQueue(true);
+var queueSounds = new createjs.LoadQueue(true);
 
     let soundObjects = {};
     
@@ -35,10 +35,48 @@ var queue = new createjs.LoadQueue(true);
             id:"crash", src:"./sounds/crash.mp3", index: 7
         },
     ];
-    queue.loadManifest(soundFiles);
+    queueSounds.loadManifest(soundFiles);
     
-    queue.on("fileload", handleSoundsLoad, this);
-    queue.on("complete", handleSoundsComplete, this);
+    queueSounds.on("fileload", handleSoundsLoad, this);
+    queueSounds.on("complete", handleSoundsComplete, this);
+
+
+var queueImages = new createjs.LoadQueue(true);
+
+    let imageObjects = {};
+    
+    function handleImagesLoad(event){
+        var item = event.item; 
+        imageObjects[item.id] = new Image(60,60);
+        imageObjects[item.id].src = item.src;
+        // console.log(imageObjects);
+    }
+    
+    function handleImagesComplete(event){
+        console.log(event);
+    }
+
+    function handleImagesProgress(event){
+        let i = 1;
+        console.log(i);
+    }
+
+    var imageFiles = [
+        {
+            id:'dementor', src:'./images/dem2-sm.png', index: 1
+        },
+        {
+            id:'snitch', src:'./images/snitch1.png', index: 1
+        },
+        {
+            id:'star', src:'./images/star.png', index: 1
+        },
+    ];
+    queueImages.loadManifest(imageFiles);
+    
+    queueImages.on("fileload", handleImagesLoad, this);
+    queueImages.on("progress", handleImagesProgress, this);
+    queueImages.on("complete", handleImagesComplete, this);
 
 $(window).on('load', function() {
     
@@ -111,14 +149,6 @@ $(window).on('load', function() {
             bgSmall.src = './images/cloudy-bg-iphone.png';
             var icon = new Image();
             icon.src = './images/broom.png';
-            // var dementor = new Image();
-            // dementor.src = './images/dementor.png'
-            var dementor = new Image();
-            dementor.src = './images/dem2.png';
-            var snitch = new Image();
-            snitch.src = './images/snitch1.png';
-            var star = new Image();
-            star.src = './images/star.png';
         
             //controls for ipad
             var rightC = new Image();
@@ -362,7 +392,7 @@ $(window).on('load', function() {
                 this.height = 60;
                 this.width = 60;
                 this.update = function () {
-                    ctx.drawImage(dementor, this.x, this.y, this.width, this.height);
+                    ctx.drawImage(imageObjects['dementor'], this.x, this.y, this.width, this.height);
                 };
                 this.newPos = function () {
                     this.x += this.speedX;
@@ -433,7 +463,7 @@ $(window).on('load', function() {
                 this.height = 20;
                 this.width = 35;
                 this.update = function () {
-                    ctx.drawImage(snitch, this.x, this.y, this.width, this.height);
+                    ctx.drawImage(imageObjects['snitch'], this.x, this.y, this.width, this.height);
                 };
                 this.newPos = function () {
                     this.x += this.speedX;
@@ -497,7 +527,7 @@ $(window).on('load', function() {
         
             function Life() {
                 this.update = (space) => {
-                    ctx.drawImage(star, 230 + space, gameBoard.canvas.height - 50, 30, 30);
+                    ctx.drawImage(imageObjects['star'], 230 + space, gameBoard.canvas.height - 50, 30, 30);
                 };
             };
         
