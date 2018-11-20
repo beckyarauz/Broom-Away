@@ -1,6 +1,3 @@
-window.addEventListener("load", function (event) {
-//https://createjs.com/docs/preloadjs/classes/LoadQueue.html
-
 var queue = new createjs.LoadQueue(true);
 
 let soundObjects = {};
@@ -43,6 +40,8 @@ queue.loadManifest(soundFiles);
 queue.on("fileload", handleSoundsLoad, this);
 queue.on("complete", handleSoundsComplete, this);
 
+window.addEventListener("load", function (event) {
+//https://createjs.com/docs/preloadjs/classes/LoadQueue.html
 function soundStop() {
     for (sound in soundObjects) {
         if (soundObjects[sound].currentTime > 0) {
@@ -51,8 +50,6 @@ function soundStop() {
         }
     }
 }
-
-
     var w = window.innerWidth;
     var h = window.innerHeight;
 
