@@ -572,7 +572,7 @@ $(window).on('load', function() {
                 for (let i = 0; i < snitchs.length; i += 1) {
                     if (player.crashWith(snitchs[i])) {
                         soundStop();
-                        soundObjects["coinTone2"].play();
+                        soundObjects["tone2"].play();
                         snitchs.splice(i, 1);
                         gameBoard.points += 150;
                     };
