@@ -16,7 +16,7 @@ $(window).on('load', function() {
     
     var soundFiles = [
         {
-            id:"click1", src:"/sounds/click-1.mp3", index: 1
+            id:"click1", src:"./sounds/click-1.mp3", index: 1
         },
         {
             id:"owlTone", src:"/sounds/tone-1.mp3", index: 2
