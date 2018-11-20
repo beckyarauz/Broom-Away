@@ -19,22 +19,22 @@ $(window).on('load', function() {
             id:"click1", src:"./sounds/click-1.mp3", index: 1
         },
         {
-            id:"owlTone", src:"/sounds/tone-1.mp3", index: 2
+            id:"owlTone", src:"./sounds/tone-1.mp3", index: 2
         },
         {
-            id:"coinTone", src:"/sounds/coin-1.mp3", index: 3
+            id:"coinTone", src:"./sounds/coin-1.mp3", index: 3
         },
         {
-            id:"tone2", src:"/sounds/tone-2.mp3", index: 4
+            id:"tone2", src:"./sounds/tone-2.mp3", index: 4
         },
         {
-            id:"tone3", src:"/sounds/tone-3.mp3", index: 5
+            id:"tone3", src:"./sounds/tone-3.mp3", index: 5
         },
         {
-            id:"gameover", src:"/sounds/gameover.mp3", index: 6
+            id:"gameover", src:"./sounds/gameover.mp3", index: 6
         },
         {
-            id:"crash", src:"/sounds/crash.mp3", index: 7
+            id:"crash", src:"./sounds/crash.mp3", index: 7
         },
     ];
     queue.loadManifest(soundFiles);
