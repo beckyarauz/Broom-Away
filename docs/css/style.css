@@ -27,6 +27,7 @@ button{
     font-size: 20px;
     font-family: monospace;
     margin: 0 20px;
+    -webkit-appearance: none;
 }
 
 button:hover{
@@ -165,6 +166,13 @@ h2{
 .house{
     width:10em;
     height: 10em;
+    margin:10px;
+    box-sizing: border-box;
+}
+
+.house:hover{
+    border-radius: 50%;
+    border:2px solid white;
 }
 
 .solid-bg{
