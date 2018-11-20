@@ -42,6 +42,7 @@ queue.on("fileload", handleSoundsLoad, this);
 queue.on("complete", handleSoundsComplete, this);
 
 function loadPage(){
+
     function soundStop() {
         for (sound in soundObjects) {
             if (soundObjects[sound].currentTime > 0) {
