@@ -10,7 +10,6 @@ function handleFilesLoad(event) {
         imageObjects[item.id] = new Image();
         imageObjects[item.id].src = item.src;
     }
-
 }
 
 function handleFilesProgress(event) {
@@ -19,8 +18,15 @@ function handleFilesProgress(event) {
 }
 
 function handleFilesComplete(event) {
+    document.body.style.backgroundImage = "url("+imageObjects['hw-bg1'].src+")"
+    $('#intro').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
+    $('#rules-1').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
+    $('#rules-2').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
+    $('#rules-3').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
+    // console.log($('#houses')).appendChild();
     document.getElementById('loading').classList.add('hide');
     document.getElementById('main').classList.remove('hide');
+
 }
 
 queue.loadManifest('manifest.json');
@@ -87,22 +93,6 @@ $(window).on('load', function () {
     var owls = [];
     var bossArr = [];
 
-    var b1 = new Image(400, 400);
-    b1.src = './images/hp-bg1.png';
-    var b2 = new Image();
-    b2.src = './images/hp-bg2.png';
-    var b3 = new Image();
-    b3.src = './images/hp-bg3.png';
-    var b4 = new Image();
-    b4.src = './images/hp-bg4.png';
-
-    var bgBig = new Image();
-    bgBig.src = './images/cloudy-bg-sml.png';
-    var bgSmall = new Image();
-    bgSmall.src = './images/cloudy-bg-iphone.png';
-    var icon = new Image();
-    icon.src = './images/broom.png';
-
     //controls for ipad
     var rightC = new Image();
     rightC.src = './images/c-right.png';
@@ -116,22 +106,22 @@ $(window).on('load', function () {
     griffindor.onclick = () => {
         soundStop();
         soundObjects["tone2"].play();
-        b1.onload = document.body.style.backgroundImage = "url('./images/hp-bg1.png')";
+        document.body.style.backgroundImage = "url("+imageObjects['b1'].src+")";
     };
     slytherin.onclick = () => {
         soundStop();
         soundObjects["tone2"].play();
-        b2.onload = document.body.style.backgroundImage = "url('./images/hp-bg2.png')";
+        document.body.style.backgroundImage = "url("+imageObjects['b2'].src+")";
     };
     ravenclaw.onclick = () => {
         soundStop();
         soundObjects["tone2"].play();
-        b3.onload = document.body.style.backgroundImage = "url('./images/hp-bg3.png')";
+        document.body.style.backgroundImage = "url("+imageObjects['b3'].src+")";
     };
     hufflepuff.onclick = () => {
         soundStop();
         soundObjects["tone2"].play();
-        b4.onload = document.body.style.backgroundImage = "url('./images/hp-bg4.png')";
+        document.body.style.backgroundImage = "url("+imageObjects['b4'].src+")";
     };
 
     instButton.onclick = () => {
@@ -183,7 +173,7 @@ $(window).on('load', function () {
     };
 
     background = {
-        img: bgBig,
+        img: imageObjects['bgBig'],
         x: 0,
         speed: -1,
         move: function () {
@@ -291,7 +281,7 @@ $(window).on('load', function () {
         this.width = width;
         this.lives = 5;
         this.update = function () {
-            ctx.drawImage(icon, this.x, this.y, this.width, this.height);
+            ctx.drawImage(imageObjects['icon'], this.x, this.y, this.width, this.height);
         };
 
         this.newPos = function () {
@@ -641,7 +631,7 @@ $(window).on('load', function () {
             if (window.matchMedia("(max-height: 376px)").matches) {
                 this.canvas.width = 660;
                 this.canvas.height = 370;
-                background.img = bgSmall;
+                background.img = imageObjects['bgSmall'];
             } else {
                 this.canvas.width = 750;
                 this.canvas.height = 500;

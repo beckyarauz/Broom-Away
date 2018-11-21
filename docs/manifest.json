@@ -1,6 +1,12 @@
 {
     "manifest": [
         {
+            "id": "hw-bg1", "src": "./images/hw-bg1.jpg"
+        },
+        {
+            "id": "bricks", "src": "./images/bricks2.jpg"
+        },
+        {
             "id": "click1",
             "src": "./sounds/click-1.mp3",
             "index": 1
@@ -49,6 +55,27 @@
             "id": "star",
             "src": "./images/star.png",
             "index": 1
+        },
+        {
+            "id": "bgBig", "src": "./images/cloudy-bg-sml.png"
+        },
+        {
+            "id": "bgSmall", "src": "./images/cloudy-bg-iphone.png"
+        },
+        {
+            "id": "icon", "src": "./images/broom.png"
+        },
+        {
+            "id": "b1", "src": "./images/hp-bg1.png"
+        },
+        {
+            "id": "b2", "src": "./images/hp-bg2.png"
+        },
+        {
+            "id": "b3", "src": "./images/hp-bg3.png"
+        },
+        {
+            "id": "b4", "src": "./images/hp-bg4.png"
         }
     ]
 }
