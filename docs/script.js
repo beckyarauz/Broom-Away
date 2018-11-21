@@ -53,12 +53,14 @@ var queueImages = new createjs.LoadQueue(true);
     }
     
     function handleImagesComplete(event){
-        console.log(event);
+        document.getElementById('loading').classList.add('hide');
+        document.getElementById('main').classList.remove('hide');
+        console.log('event: ' + event);
     }
 
     function handleImagesProgress(event){
-        let i = 1;
-        console.log(i);
+        document.getElementById('loading').classList.remove('hide');
+        document.getElementById('main').classList.add('hide');
     }
 
     var imageFiles = [

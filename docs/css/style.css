@@ -245,6 +245,20 @@ h2{
     justify-content: space-around;
     align-items: center;
 }
+
+#loading{
+    background-color: black;
+    width:100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+#loading h1{
+    color:white;
+    font-family: monospace;
+    font-size: 48px;
+}
+
 .flex{
     display: flex;
 }
