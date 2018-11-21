@@ -27,7 +27,8 @@ button{
     font-size: 20px;
     font-family: monospace;
     margin: 0 20px;
-    -webkit-appearance: none;
+    background-color: rgb(206, 201, 201);
+    -webkit-appearance: button;
 }
 
 button:hover{
@@ -291,9 +292,37 @@ h2{
 }
 
 @media only screen and (max-width: 667px) {
+    p{
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
     .house {
         /* display: none; */
         height: 100px;
         width: 100px;
+        margin:5px;
+    }
+    #houses{
+    width: 500px;
+    }
+    h1{
+        font-size: 3em;
+    }
+    h2{
+        font-size: 2.5em;
+    }
+    .enemy{
+        width: 25px;
+        height: 45px;
+    }
+    .owl{
+        width: 20px;
+        height: 20px;
+    }
+    #bosses {
+        justify-content: space-around;
+    }
+    .boss{
+        margin:0 15px;
     }
 }
