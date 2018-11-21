@@ -37,6 +37,7 @@ queue.on("progress", handleFilesProgress, this);
 
 
 $(window).on('load', function () {
+    // location.reload(true);
     if (window.matchMedia("(max-height: 376px)").matches) {
         $('#bosses div').removeClass('row');
     }
@@ -87,6 +88,13 @@ $(window).on('load', function () {
     var sprites;
     var space;
 
+    var upDir;
+    var rightDir;
+    var leftDir;
+    var downDir;
+
+    var controls;
+
     var dementors = [];
     var snitchs = [];
     var lives = [];
@@ -105,22 +113,22 @@ $(window).on('load', function () {
 
     griffindor.onclick = () => {
         soundStop();
-        soundObjects["tone2"].play();
+        soundObjects["coinTone2"].play();
         document.body.style.backgroundImage = "url("+imageObjects['b1'].src+")";
     };
     slytherin.onclick = () => {
         soundStop();
-        soundObjects["tone2"].play();
+        soundObjects["coinTone2"].play();
         document.body.style.backgroundImage = "url("+imageObjects['b2'].src+")";
     };
     ravenclaw.onclick = () => {
         soundStop();
-        soundObjects["tone2"].play();
+        soundObjects["coinTone2"].play();
         document.body.style.backgroundImage = "url("+imageObjects['b3'].src+")";
     };
     hufflepuff.onclick = () => {
         soundStop();
-        soundObjects["tone2"].play();
+        soundObjects["coinTone2"].play();
         document.body.style.backgroundImage = "url("+imageObjects['b4'].src+")";
     };
 
@@ -175,18 +183,18 @@ $(window).on('load', function () {
     background = {
         img: imageObjects['bgBig'],
         x: 0,
-        speed: -1,
+        speed: 0,
         move: function () {
             this.x += this.speed;
             this.x %= gameBoard.canvas.width;
         },
 
         draw: function () {
-            ctx.drawImage(this.img, this.x, 0);
+            ctx.drawImage(imageObjects['bgBig'], this.x, 0);
             if (this.speed < 0) {
-                ctx.drawImage(this.img, this.x + gameBoard.canvas.width, 0);
+                ctx.drawImage(imageObjects['bgBig'], this.x + gameBoard.canvas.width, 0);
             } else {
-                ctx.drawImage(this.img, this.x - this.img.width, 0);
+                ctx.drawImage(imageObjects['bgBig'], this.x - imageObjects['bgBig'].width, 0);
             };
         },
     };
@@ -328,7 +336,7 @@ $(window).on('load', function () {
     };
 
     function Dementor(x, y) {
-        this.speedX = 0;
+        this.speedX = gameBoard.speed;
         this.speedY = 0;
         this.x = x;
         this.y = y;
@@ -399,7 +407,7 @@ $(window).on('load', function () {
     };
 
     function Coin(x, y) {
-        this.speedX = -1;
+        this.speedX = gameBoard.speed * 1.1;
         this.speedY = 0;
         this.x = x;
         this.y = y;
@@ -486,13 +494,6 @@ $(window).on('load', function () {
         };
     }
 
-    var upDir;
-    var rightDir;
-    var leftDir;
-    var downDir;
-
-    var controls;
-
     function drawControls() {
         controls.forEach((control) => {
             control.update();
@@ -570,7 +571,7 @@ $(window).on('load', function () {
     };
 
     function dementorGenerator() {
-        if (Math.random() < 1 - Math.pow(.993, gameBoard.frames / 8500)) {
+        if (Math.random() < 1 - Math.pow(0.993, gameBoard.frames / 4000)) {
             var y = Math.floor(Math.random() * (gameBoard.canvas.height));
             var dem = new Dementor(gameBoard.canvas.width, y);
             dementors.push(dem);
@@ -578,7 +579,7 @@ $(window).on('load', function () {
     };
 
     function snitchGenerator() {
-        if (gameBoard.frames % 100 === 0) {
+        if (gameBoard.frames % 80 === 0) {
             var t = Math.floor(Math.random() * (gameBoard.canvas.height));
             var sni = new Coin(gameBoard.canvas.width, t);
             snitchs.push(sni);
@@ -606,15 +607,20 @@ $(window).on('load', function () {
         };
     };
 
+    var now;
+    var last;
+
     startButton.onclick = () => {
         soundStop();
         soundObjects["tone3"].play();
+        now = new Date().getTime() / 1000;
         intro.classList.remove('flex');
         intro.classList.add('hide');
         game.classList.add('flex');
 
         player = new Player(100, 100, 60, 55);
         gameBoard.start();
+        background.speed = gameBoard.speed;
         updateGameArea();
     };
 
@@ -665,7 +671,7 @@ $(window).on('load', function () {
 
             ctx.font = '18px monospace';
             ctx.fillStyle = 'black';
-            ctx.fillText('Score: ' + this.points, this.canvas.width * 0.5 - 30, 50);
+            ctx.fillText('Score: ' + this.points, this.canvas.width * 0.5 - 40, 50);
         },
         gameTime: 0,
         pause: false,
@@ -684,17 +690,18 @@ $(window).on('load', function () {
             }
         },
         gameOver: () => {
-            soundStop();
+            soundStop();    
             soundObjects["gameover"].play();
             ctx.fillStyle = 'black';
-            roundedRect(ctx, 250, 150, 300, 200, 15);
+            roundedRect(ctx, (gameBoard.canvas.width/2)-150, (gameBoard.canvas.height/2)- 100, 300, 200, 15);
             ctx.font = '48px monospace';
             ctx.strokeStyle = 'white';
-            ctx.strokeText('GAME OVER', 280, 250);
+            ctx.strokeText('GAME OVER', (gameBoard.canvas.width/2)-120, (gameBoard.canvas.height/2)- 20);
             ctx.fillStyle = 'white';
             ctx.font = '16px monospace';
-            ctx.fillText('your final score is: ' + gameBoard.points, 290, 300);
-        }
+            ctx.fillText('your final score is: ' + gameBoard.points,(gameBoard.canvas.width/2)-110, (gameBoard.canvas.height/2)+20);
+        },
+        speed: -1,
     };
 
     //   else {
@@ -776,7 +783,6 @@ $(window).on('load', function () {
             return;
         }
         backgroundUpdate();
-        gameBoard.score();
         //when the player crashes with a dementor
         dementorCrash();
         //when a player crashes with a snitch
@@ -803,15 +809,34 @@ $(window).on('load', function () {
             };
         }
         //make it faster every 1000 frames
+        
+        //speed bg every 30 secs
 
-        // if (gameBoard.frames % (60 * 20) === 0) {
-        //     background.speed -= 0.8;
-        //     for (let i = 0; i < dementors.length; i++) {
-        //         dementors[i].speedX = background.speed;
-        //         dementors[i].newPos();
-        //         dementors[i].update();
-        //     }
-        // };
+        if (gameBoard.frames % 60 === 0) {
+            last = now;
+            current = Math.ceil(new Date().getTime() / 1000);
+            let dt = current - last
+            if(Math.floor(dt) % 30 === 0){
+                console.log('30 seconds have passed: ' + dt);
+                gameBoard.speed -= 0.8;
+                background.speed = gameBoard.speed;
+                // background.speed -= 0.8;
+                // for (let i = 0; i < dementors.length; i++) {
+                //     dementors[i].speedX = background.speed;
+                //     console.log(dementors[i].speedX);
+                //     dementors[i].newPos();
+                //     dementors[i].update();
+                // }
+                // for (let i = 0; i < snitchs.length; i++) {
+                //     snitchs[i].speedX = background.speed * 0.2;
+                //     console.log(snitchs[i].speedX);
+                //     snitchs[i].newPos();
+                //     snitchs[i].update();
+                // }
+                console.log(background.speed);
+            }
+        }
+        
 
         player.newPos();
         player.update();

@@ -8,53 +8,47 @@
         },
         {
             "id": "click1",
-            "src": "./sounds/click-1.mp3",
-            "index": 1
+            "src": "./sounds/click-1.mp3"
         },
         {
             "id": "owlTone",
-            "src": "./sounds/tone-1.mp3",
-            "index": 2
+            "src": "./sounds/tone-1.mp3"
         },
         {
             "id": "coinTone",
-            "src": "./sounds/coin-1.mp3",
-            "index": 3
+            "src": "./sounds/coin-1.mp3"
+        },
+        {
+            "id": "coinTone2",
+            "src": "./sounds/coin-2.mp3"
         },
         {
             "id": "tone2",
-            "src": "./sounds/tone-2.mp3",
-            "index": 4
+            "src": "./sounds/tone-2.mp3"
         },
         {
             "id": "tone3",
-            "src": "./sounds/tone-3.mp3",
-            "index": 5
+            "src": "./sounds/tone-3.mp3"
         },
         {
             "id": "gameover",
-            "src": "./sounds/gameover.mp3",
-            "index": 6
+            "src": "./sounds/gameover.mp3"
         },
         {
             "id": "crash",
-            "src": "./sounds/crash.mp3",
-            "index": 7
+            "src": "./sounds/crash.mp3"
         },
         {
             "id": "dementor",
-            "src": "./images/dem2-sm.png",
-            "index": 1
+            "src": "./images/dem2-sm.png"
         },
         {
             "id": "snitch",
-            "src": "./images/snitch1.png",
-            "index": 1
+            "src": "./images/snitch1.png"
         },
         {
             "id": "star",
-            "src": "./images/star.png",
-            "index": 1
+            "src": "./images/star.png"
         },
         {
             "id": "bgBig", "src": "./images/cloudy-bg-sml.png"
