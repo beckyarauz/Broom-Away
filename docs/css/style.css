@@ -10,7 +10,7 @@ body{
     flex-direction: column;
     margin:0;
 }
-body,#intro,#game,#bosses,.row,.round,.c-round,.container,.first{
+body,#intro,#game,#bosses,.scores,.row,.round,.c-round,.container,.first{
     justify-content: center;
     align-items: center;
 }
@@ -52,8 +52,12 @@ button:hover{
     position: absolute;
     bottom: 30px;
 }
-.next, .to-start{
+.next{
     right:40px;
+}
+
+.to-start{
+    right:100px;
 }
 
 /* svg resize */
@@ -79,7 +83,14 @@ button:hover{
 }
 
 #phone-controls, #keyboard-controls{
-    width:230px;
+    width:400px;
+}
+#phone-controls{
+    display: none;
+};
+
+#s-btn{
+    width: 50px;
 }
 
 #keyboard-controls{
@@ -220,7 +231,7 @@ h2{
 }
 
 #snitch,.castle{
-    margin:20px 10px;
+    margin:15px 5px;
     height:20px;
     width:40px;
 }
@@ -232,6 +243,9 @@ h2{
 
 #bosses .row{
     justify-content: space-evenly;
+}
+#keyboard-controls .row{
+    width: 150px;
 }
 
 .owl{
@@ -296,6 +310,9 @@ h2{
     }
     #keyboard-controls{
         display: none;
+    }
+    #phone-controls{
+        display: flex;
     }
     .house {
         /* display: none; */

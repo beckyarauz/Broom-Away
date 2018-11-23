@@ -72,8 +72,8 @@
                             <p>Press the <b>WAND</b> button to shoot spells at your enemies</p>
                         </div>
                     </div>
-                    <div id="keyboard-controls" class="flex flex-column">
-                        <div class="flex arrow-keys">
+                    <div id="keyboard-controls" class="flex">
+                        <div class="flex arrow-keys flex-column">
                             <div class="row">
                                 <button class="arrow">⇡</button>
                             </div>
@@ -83,10 +83,12 @@
                                 <button class="arrow">⇢</button>
                             </div>
                         </div>
-                        <button id="space-key">SPACE</button>
-                        <p>Press the <b>SPACE</b> key to pause the game</p>
-                        <button id="s-btn">S</button>
-                        <p>Press the <b>S</b> key to shoot spells at your enemies</p>
+                        <div>
+                                <button id="space-key">SPACE</button>
+                                <p>Press the <b>SPACE</b> key to pause the game</p>
+                                <button id="s-btn">S</button>
+                                <p>Press the <b>S</b> key to shoot spells at your enemies</p>
+                        </div>
                     </div>
                 </div>
                 <div id="backBtn1" class="back">
@@ -189,16 +191,36 @@
                         <use xlink:href="#leftarrow"></use>
                     </svg>
                 </div>
+                <div id="nextBtn3" class="next">
+                    <svg class="svg-arrow">
+                        <use xlink:href="#rightarrow"></use>
+                    </svg>
+                </div>
                 <div class="round flex light to-start">
                     <img class="castle" src="./images/castle.png" alt="">
                 </div>
-                <!-- <button id="to-start" class="to-start"><span>Back to Start</span></button> -->
             </div>
         </section>
         <section id="scores" class="flex bricks">
+                <div class="solid-bg width-stretch flex flex-column scores">
+                    <h2>Your Scores</h2>
+                    <div id="highScores">
+                        <table>
+                            <thead>
+                                    <tr>
+                                            <th>Player</th>
+                                            <th>Score</th>
+                                    </tr>
+                            </thead>
+                            <tbody id="hsTable">
+
+                            </tbody>
+                        </table>
+                    </div>
             <div class="round flex light to-start">
                 <img class="castle" src="./images/castle.png" alt="">
             </div>
+                </div>
         </section>
         <section id="game" class="flex">
         </section>

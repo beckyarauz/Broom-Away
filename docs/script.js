@@ -3,6 +3,19 @@
     if (window.matchMedia("(max-height: 375px)").matches) {
         $('#bosses div').removeClass('row');
     };
+    if (!localStorage.getItem('n')) {
+        localStorage.setItem('n', 1);
+    }
+
+    var plays = localStorage.getItem('n')
+
+    for(let i = 1; i < plays; i++){
+        $('#hsTable').append(
+            `<tr>
+                <td>${localStorage.getItem('Player-' + i)}</td>
+                <td>${localStorage.getItem('score-' + i)}</td>
+            </tr>`);
+    }
 
     function soundStop() {
         for (sound in soundObjects) {
@@ -37,7 +50,8 @@
 
     var castle = $('.to-start');
 
-    var name;
+
+    var userName;
     var owl;
     var background;
     var ranBoss;
@@ -109,8 +123,9 @@
         soundObjects["click1"].play();
         $(this).parent().parent().toggle();
         $(this).parentsUntil('#main').next().toggle();
-        if (name == undefined) {
-            name = prompt("What's your name?");
+        if (userName == undefined || userName.length == 0) {
+             var name = prompt("What's your name?");
+             userName = name;
             username.innerHTML = name;
         }
     })
@@ -554,16 +569,13 @@
             } else if (finalBoss == undefined) {
                 gameBoard.gameWon();
             };
-            localStorage.setItem('score', gameBoard.points);
-            if (!localStorage.getItem('n')) {
-                localStorage.setItem('n', 1);
-            }
-            var count = localStorage.getItem('n');
+            localStorage.setItem('score-'+ plays, gameBoard.points);
+            var count = plays;
             localStorage.setItem('Games Played', count);
             count++;
             localStorage.setItem('n', count);
+            localStorage.setItem(`Player-${plays}`, userName);
             return;
-
         }
         spellCrash();
 
