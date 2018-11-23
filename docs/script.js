@@ -7,6 +7,10 @@
         localStorage.setItem('n', 1);
     }
 
+    $('#clear-cache').click(function(){
+        window.location.reload(true);
+    })
+
     var plays = localStorage.getItem('n')
 
     for(let i = 1; i < plays; i++){
@@ -368,7 +372,7 @@
         intro.classList.remove('flex');
         intro.classList.add('hide');
         game.classList.add('flex');
-
+        $('#clear-cache').toggle();
         player = new Player(100, 100, 60, 55);
         gameBoard.start();
         background.speed = gameBoard.speed;

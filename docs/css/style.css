@@ -81,6 +81,11 @@ button:hover{
     height: 50px;
     width:50px;
 }
+#clear-cache{
+    position: absolute;
+    top:2px;
+    font-size: 15px;
+}
 
 #phone-controls, #keyboard-controls{
     width:400px;
