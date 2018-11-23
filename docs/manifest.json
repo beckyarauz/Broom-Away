@@ -1,14 +1,35 @@
 {
     "manifest": [
         {
-            "id": "hw-bg1", "src": "./images/hw-bg1.jpg"
+            "id": "font", "src": "./font/harryP.TTF"
         },
         {
-            "id": "bricks", "src": "./images/bricks2.jpg"
+            "id": "hw-bg1",
+            "src": "./images/hw-bg1.jpg"
+        },
+        {
+            "id": "bricks",
+            "src": "./images/bricks2.jpg"
         },
         {
             "id": "click1",
             "src": "./sounds/click-1.mp3"
+        },
+        {
+            "id": "shoot",
+            "src": "./sounds/shoot-1.mp3"
+        },
+        {
+            "id": "boss-shoot",
+            "src": "./sounds/boss-shoot.mp3"
+        },
+        {
+            "id": "kill",
+            "src": "./sounds/kill.mp3"
+        },
+        {
+            "id": "boss-kill",
+            "src": "./sounds/boss-kill.mp3"
         },
         {
             "id": "owlTone",
@@ -35,12 +56,36 @@
             "src": "./sounds/gameover.mp3"
         },
         {
+            "id": "gamewon",
+            "src": "./sounds/game-won.mp3"
+        },
+        {
             "id": "crash",
             "src": "./sounds/crash.mp3"
         },
         {
             "id": "dementor",
             "src": "./images/dem2-sm.png"
+        },
+        {
+            "id": "boss1",
+            "src": "./images/boss-1.png",
+            "color": "#721860"
+        },
+        {
+            "id": "boss2",
+            "src": "./images/boss-2.png",
+            "color": "#ca7a2b"
+        },
+        {
+            "id": "boss3",
+            "src": "./images/boss-3.png",
+            "color": "#49a6ab"
+        },
+        {
+            "id": "boss4",
+            "src": "./images/boss-4.png",
+            "color": "#282659"
         },
         {
             "id": "snitch",
@@ -51,25 +96,40 @@
             "src": "./images/star.png"
         },
         {
-            "id": "bgBig", "src": "./images/cloudy-bg-sml.png"
+            "id": "bgBig",
+            "src": "./images/cloudy-bg-sml.png"
         },
         {
-            "id": "bgSmall", "src": "./images/cloudy-bg-iphone.png"
+            "id": "bgSmall",
+            "src": "./images/cloudy-bg-iphone.png"
         },
         {
-            "id": "icon", "src": "./images/broom.png"
+            "id": "icon",
+            "src": "./images/broom.png"
         },
         {
-            "id": "b1", "src": "./images/hp-bg1.png"
+            "id": "b1",
+            "src": "./images/hp-bg1.png"
         },
         {
-            "id": "b2", "src": "./images/hp-bg2.png"
+            "id": "b2",
+            "src": "./images/hp-bg2.png"
         },
         {
-            "id": "b3", "src": "./images/hp-bg3.png"
+            "id": "b3",
+            "src": "./images/hp-bg3.png"
         },
         {
-            "id": "b4", "src": "./images/hp-bg4.png"
+            "id": "b4",
+            "src": "./images/hp-bg4.png"
+        },
+        {
+            "id": "spell",
+            "src": "./images/spell.png"
+        },
+        {
+            "id": "boss-spell",
+            "src": "./images/boss-spell.png"
         }
     ]
 }

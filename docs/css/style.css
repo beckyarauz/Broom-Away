@@ -48,11 +48,11 @@ button:hover{
     justify-content: space-between;
 }
 
-.back ,.next, #to-start{
+.back ,.next, .to-start{
     position: absolute;
     bottom: 30px;
 }
-.next, #to-start{
+.next, .to-start{
     right:40px;
 }
 
@@ -62,7 +62,7 @@ button:hover{
     width: 32px;
 }
 
-#to-start{
+.to-start{
     min-width: 65px;
     max-width: 65px;
     max-height: 65px;
@@ -141,7 +141,7 @@ h2{
     font-size: 60px;
 }
 
-#intro, #rules-1,#rules-2,#rules-3{
+#intro, #rules-1,#rules-2,#rules-3,#scores{
     position: relative;
     width: 80vw;
     min-width: 550px;
@@ -189,7 +189,7 @@ h2{
 .round{
     border-radius: 50%;
 }
-#to-start img{
+.to-start img{
     height: 35px;
     min-width: 35px;
     max-width: 35px;
@@ -219,7 +219,7 @@ h2{
     width:300px;
 }
 
-#snitch,#castle{
+#snitch,.castle{
     margin:20px 10px;
     height:20px;
     width:40px;
@@ -293,6 +293,9 @@ h2{
     p{
         font-size: 0.8rem;
         margin-top: 5px;
+    }
+    #keyboard-controls{
+        display: none;
     }
     .house {
         /* display: none; */

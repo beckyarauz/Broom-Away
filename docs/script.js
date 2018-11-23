@@ -1,14 +1,20 @@
+myStorage = window.localStorage;
+
 var queue = new createjs.LoadQueue(true);
 let soundObjects = {};
 let imageObjects = {};
+let bossImageObjects = {};
 
 function handleFilesLoad(event) {
     var item = event.item;
-    if (event.item.type == "sound") {
+    if (item.type == "sound") {
         soundObjects[item.id] = new Audio(item.src);
-    } else if (event.item.type == "image") {
+    } else if (item.type == "image") {
         imageObjects[item.id] = new Image();
         imageObjects[item.id].src = item.src;
+        if (item.id.includes('boss')) {
+            bossImageObjects[item.id] = item;
+        }
     }
 }
 
@@ -18,15 +24,16 @@ function handleFilesProgress(event) {
 }
 
 function handleFilesComplete(event) {
-    document.body.style.backgroundImage = "url("+imageObjects['hw-bg1'].src+")"
+    document.body.style.backgroundImage = "url(" + imageObjects['hw-bg1'].src + ")"
     $('#intro').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
     $('#rules-1').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
     $('#rules-2').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
     $('#rules-3').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
+    $('#scores').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
     // console.log($('#houses')).appendChild();
     document.getElementById('loading').classList.add('hide');
     document.getElementById('main').classList.remove('hide');
-
+    console.log(bossImageObjects);
 }
 
 queue.loadManifest('manifest.json');
@@ -38,7 +45,7 @@ queue.on("progress", handleFilesProgress, this);
 
 $(window).on('load', function () {
     // location.reload(true);
-    if (window.matchMedia("(max-height: 376px)").matches) {
+    if (window.matchMedia("(max-height: 375px)").matches) {
         $('#bosses div').removeClass('row');
     }
 
@@ -62,31 +69,34 @@ $(window).on('load', function () {
     var hufflepuff = document.getElementById('hufflepuff');
 
     var startButton = document.getElementById('start');
-    var instButton = document.getElementById('instructions');
-    //normal index
-    var rules1 = document.getElementById('rules-1');
-    var rules2 = document.getElementById('rules-2');
-    var rules3 = document.getElementById('rules-3');
+    var inst = $('#instructions');
 
-    var nextBtn1 = document.getElementById('nextBtn1');
-    var nextBtn2 = document.getElementById('nextBtn2');
+    var rules1 = $('#rules-1');
+    var rules2 = $('#rules-2');
+    var rules3 = $('#rules-3');
+    var scores = $('#scores');
 
-    var backBtn1 = document.getElementById('backBtn1');
-    var backBtn2 = document.getElementById('backBtn2');
-    var backBtn3 = document.getElementById('backBtn3');
+    // var nextBtn1 = $('#nextBtn1');
+    // var nextBtn2 = $('#nextBtn2');
+    var nextBtn = $('.next');
 
-    var toStart = document.getElementById('to-start');
+    var backBtn = $('.back');
+
+    // var toStart = document.getElementById('to-start');
+    var castle = $('.to-start');
 
     var name;
     var owl;
     var background;
-    var boss;
     var ranBoss;
     var gameBoard;
     var player;
     var finalBoss;
     var sprites;
     var space;
+    var spell;
+    var now;
+    var last;
 
     var upDir;
     var rightDir;
@@ -100,6 +110,13 @@ $(window).on('load', function () {
     var lives = [];
     var owls = [];
     var bossArr = [];
+    var spells = [];
+    var spellsBoss = [];
+
+    rules1.toggle();
+    rules2.toggle();
+    rules3.toggle();
+    scores.toggle();
 
     //controls for ipad
     var rightC = new Image();
@@ -110,75 +127,63 @@ $(window).on('load', function () {
     downC.src = './images/c-down.png';
     var leftC = new Image();
     leftC.src = './images/c-left.png';
+    var shoot = new Image();
+    shoot.src = './images/magic-wand.png';
 
     griffindor.onclick = () => {
         soundStop();
         soundObjects["coinTone2"].play();
-        document.body.style.backgroundImage = "url("+imageObjects['b1'].src+")";
+        document.body.style.backgroundImage = "url(" + imageObjects['b1'].src + ")";
     };
     slytherin.onclick = () => {
         soundStop();
         soundObjects["coinTone2"].play();
-        document.body.style.backgroundImage = "url("+imageObjects['b2'].src+")";
+        document.body.style.backgroundImage = "url(" + imageObjects['b2'].src + ")";
     };
     ravenclaw.onclick = () => {
         soundStop();
         soundObjects["coinTone2"].play();
-        document.body.style.backgroundImage = "url("+imageObjects['b3'].src+")";
+        document.body.style.backgroundImage = "url(" + imageObjects['b3'].src + ")";
     };
     hufflepuff.onclick = () => {
         soundStop();
         soundObjects["coinTone2"].play();
-        document.body.style.backgroundImage = "url("+imageObjects['b4'].src+")";
+        document.body.style.backgroundImage = "url(" + imageObjects['b4'].src + ")";
     };
 
-    instButton.onclick = () => {
+    //parents
+    inst.click(function () {
         soundStop();
         soundObjects["click1"].play();
-        intro.classList.add('hide');
-        rules1.classList.remove('hide');
+        $(this).parentsUntil('#main').toggle();
+        $(this).parentsUntil('#main').next().toggle();
         if (name == undefined) {
-            name = this.prompt("What's your name?");
+            name = prompt("What's your name?");
             username.innerHTML = name;
         }
-    };
+    })
 
-    nextBtn1.onclick = () => {
-        rules1.classList.add('hide');
-        rules2.classList.remove('hide');
+    nextBtn.click(function () {
+        $(this).parentsUntil('#main').toggle();
+        $(this).parentsUntil('#main').next().toggle();
         soundStop();
         soundObjects["click1"].play();
-    };
-    backBtn1.onclick = () => {
-        rules1.classList.add('hide');
-        intro.classList.remove('hide');
+    });
+
+
+    backBtn.click(function () {
+        $(this).parentsUntil('#main').toggle();
+        $(this).parentsUntil('#main').prev().toggle();
         soundStop();
         soundObjects["click1"].play();
-    };
-    nextBtn2.onclick = () => {
-        rules2.classList.add('hide');
-        rules3.classList.remove('hide');
-        soundStop();
-        soundObjects["click1"].play();
-    };
-    backBtn2.onclick = () => {
-        rules2.classList.add('hide');
-        rules1.classList.remove('hide');
-        soundStop();
-        soundObjects["click1"].play();
-    };
-    backBtn3.onclick = () => {
-        rules3.classList.add('hide');
-        rules2.classList.remove('hide');
-        soundStop();
-        soundObjects["click1"].play();
-    };
-    toStart.onclick = () => {
-        rules3.classList.add('hide');
-        intro.classList.remove('hide');
+    });
+
+    castle.click(function () {
+        $(this).parentsUntil('#main').toggle();
+        $('#intro').toggle();
         soundStop();
         soundObjects["tone2"].play();
-    };
+    });
 
     background = {
         img: imageObjects['bgBig'],
@@ -210,7 +215,6 @@ $(window).on('load', function () {
         ctx.arcTo(x + width, y, x + width - radius, y, radius);
         ctx.lineTo(x + radius, y);
         ctx.arcTo(x, y, x, y + radius, radius);
-        ctx.fill();
     };
 
     function removeSprite(sp) {
@@ -229,6 +233,8 @@ $(window).on('load', function () {
             for (let i = 0; i < sp.length; i++) {
                 sprite = sp[i];
                 if (sprite instanceof Boss) {
+                    // sprite = sp;
+                    // console.log(sprite);
                     if (sprite.borderTop == false) {
                         if (sprite.y > 0) {
                             sprite.y--;
@@ -244,8 +250,7 @@ $(window).on('load', function () {
                         if (sprite.y == gameBoard.canvas.height - sprite.height) {
                             sprite.borderTop = false;
                         };
-                    }
-
+                    };
                     sprite.update();
                     return;
                 };
@@ -377,8 +382,19 @@ $(window).on('load', function () {
         this.y = y;
         this.height = 80;
         this.width = 60;
+        this.hp = 1000;
         this.update = function () {
-            ctx.drawImage(boss, this.x, this.y, this.width, this.height);
+            ctx.drawImage(imageObjects['boss' + ranBoss], this.x, this.y, this.width, this.height);
+            ctx.font = '18px monospace';
+            ctx.fillStyle = 'black';
+            ctx.fillText('Boss HP', gameBoard.canvas.width - 170, 35);
+            ctx.fillStyle = bossImageObjects['boss' + ranBoss].color;
+            // ctx.fillStyle = 'blue';
+            roundedRect(ctx, gameBoard.canvas.width - 200, 40, this.hp * 0.15, 20, 5);
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            roundedRect(ctx, gameBoard.canvas.width - 200, 40, 1000 * 0.15, 20, 5);
+            ctx.stroke();
         };
         this.newPos = function () {
             this.x += this.speedX;
@@ -476,6 +492,76 @@ $(window).on('load', function () {
         };
     };
 
+    function Spell(x, y) {
+        this.speedX = 5;
+        this.speedY = 0;
+        this.x = x;
+        this.y = y;
+        this.height = 15;
+        this.width = 25;
+        this.update = function () {
+            ctx.drawImage(imageObjects['spell'], this.x, this.y, this.width, this.height);
+        };
+        this.newPos = function () {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        };
+
+        this.left = function () {
+            return this.x
+        };
+        this.right = function () {
+            return (this.x + this.width)
+        };
+        this.top = function () {
+            return this.y
+        };
+        this.bottom = function () {
+            return this.y + (this.height)
+        };
+        this.crashWith = function (obstacle) {
+            return !((this.bottom() < obstacle.top()) ||
+                (this.top() > obstacle.bottom()) ||
+                (this.right() < obstacle.left()) ||
+                (this.left() > obstacle.right()))
+        };
+    };
+
+    function BossSpell(x, y) {
+        this.speedX = -5;
+        this.speedY = 0;
+        this.x = x;
+        this.y = y;
+        this.height = 15;
+        this.width = 25;
+        this.update = function () {
+            ctx.drawImage(imageObjects['boss-spell'], this.x, this.y, this.width, this.height);
+        };
+        this.newPos = function () {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        };
+
+        this.left = function () {
+            return this.x
+        };
+        this.right = function () {
+            return (this.x + this.width)
+        };
+        this.top = function () {
+            return this.y
+        };
+        this.bottom = function () {
+            return this.y + (this.height)
+        };
+        this.crashWith = function (obstacle) {
+            return !((this.bottom() < obstacle.top()) ||
+                (this.top() > obstacle.bottom()) ||
+                (this.right() < obstacle.left()) ||
+                (this.left() > obstacle.right()))
+        };
+    };
+
     function Life() {
         this.update = (space) => {
             ctx.drawImage(imageObjects['star'], 230 + space, gameBoard.canvas.height - 50, 30, 30);
@@ -514,6 +600,12 @@ $(window).on('load', function () {
                     break;
                 case 39:
                     player.moveRight();
+                    break;
+                case 83:
+                    spell = new Spell(player.x + player.width, player.y);
+                    spells.push(spell);
+                    soundStop();
+                    soundObjects['shoot'].play()
                     break;
             };
         };
@@ -569,6 +661,41 @@ $(window).on('load', function () {
             };
         };
     };
+    function spellCrash() {
+        for (var i = 0; i < spells.length; i += 1) {
+            if (dementors.length > 0 && spells.length > 0) {
+                for (var j = 0; j < dementors.length; j++) {
+                    if (spells[i].crashWith(dementors[j])) {
+                        soundStop();
+                        soundObjects['kill'].play();
+                        dementors.splice(j, 1);
+                        spells.splice(i, 1);
+                        gameBoard.points += 50;
+                    };
+                };
+            };
+            if (finalBoss != undefined && spells.length > 0 && spells.length > 0) {
+                if (spells[i] != undefined) {
+                    if (spells[i].crashWith(bossArr[0])) {
+                        console.log('Boss hit!');
+                        soundStop();
+                        soundObjects['kill'].play();
+                        spells.splice(i, 1);
+                        bossArr[0].hp -= 100;
+                        console.log(bossArr[0].hp);
+                        gameBoard.points += 100;
+                        if (bossArr[0].hp == 0) {
+                            finalBoss = undefined;
+                            soundStop();
+                            soundObjects['boss-kill'].play();
+                            bossArr.splice(0, 1);
+                            gameBoard.over = true;
+                        };
+                    };
+                };
+            };
+        };
+    };
 
     function dementorGenerator() {
         if (Math.random() < 1 - Math.pow(0.993, gameBoard.frames / 4000)) {
@@ -587,9 +714,9 @@ $(window).on('load', function () {
     };
 
     function bossGenerator() {
-        if (gameBoard.points > 18000 && gameBoard.points < 18200) {
+        if (gameBoard.points >= 1000 && gameBoard.points <= 1500) {
             finalBoss = new Boss(gameBoard.canvas.width - 100, 200);
-            bossArr.push([finalBoss]);
+            bossArr.push(finalBoss);
         };
     };
 
@@ -606,9 +733,16 @@ $(window).on('load', function () {
             owls.push(owlSprite);
         };
     };
-
-    var now;
-    var last;
+    function bossSpellGenerator() {
+        if (gameBoard.frames % 30 === 0) {
+            if (finalBoss != undefined) {
+                var bSpell = new BossSpell(bossArr[0].x, bossArr[0].y + bossArr[0].height / 2);
+                // soundStop();
+                soundObjects['boss-shoot'].play();
+                spellsBoss.push(bSpell);
+            }
+        }
+    };
 
     startButton.onclick = () => {
         soundStop();
@@ -632,6 +766,13 @@ $(window).on('load', function () {
     };
 
     gameBoard = {
+        speed: -1,
+        frames: 0,
+        points: 0,
+        gameTime: 0,
+        pause: false,
+        over: false,
+        lastScore: localStorage.getItem('score'),
         canvas: document.createElement("canvas"),
         start: function () {
             if (window.matchMedia("(max-height: 376px)").matches) {
@@ -649,32 +790,32 @@ $(window).on('load', function () {
                 lives.push(life);
             };
             ranBoss = Math.ceil(Math.random() * (4));
-            boss = new Image();
-            boss.src = './images/boss-' + ranBoss + '.png';
+            
             upDir = new Control(upC, 70, gameBoard.canvas.height - 150, 70, 70, 'up control');
             rightDir = new Control(rightC, 110, gameBoard.canvas.height - 115, 70, 70, 'right control');
             leftDir = new Control(leftC, 30, gameBoard.canvas.height - 115, 70, 70, 'left control');
             downDir = new Control(downC, 70, gameBoard.canvas.height - 75, 70, 70, 'down control');
+            shootBtn = new Control(shoot, gameBoard.canvas.width - 100, gameBoard.canvas.height - 75, 50, 50, 'shoot control');
 
-            controls = [upDir, rightDir, leftDir, downDir];
+            controls = [upDir, rightDir, leftDir, downDir, shootBtn];
         },
         clear: function () {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         },
-        frames: 0,
-        points: 0,
         score: function () {
             if (this.frames % 60 === 0) {
                 this.points += 100;
                 this.gameTime++;
             }
-
             ctx.font = '18px monospace';
             ctx.fillStyle = 'black';
             ctx.fillText('Score: ' + this.points, this.canvas.width * 0.5 - 40, 50);
+            if (localStorage.getItem('score')) {
+                ctx.font = '18px monospace';
+                ctx.fillStyle = 'black';
+                ctx.fillText('Last Score: ' + this.lastScore, this.canvas.width * 0.1, 50);
+            };
         },
-        gameTime: 0,
-        pause: false,
         boundaries: () => {
             if (player.x >= gameBoard.canvas.width - player.width) {
                 player.x = gameBoard.canvas.width - player.width - 20;
@@ -690,23 +831,32 @@ $(window).on('load', function () {
             }
         },
         gameOver: () => {
-            soundStop();    
+            soundStop();
             soundObjects["gameover"].play();
             ctx.fillStyle = 'black';
-            roundedRect(ctx, (gameBoard.canvas.width/2)-150, (gameBoard.canvas.height/2)- 100, 300, 200, 15);
+            roundedRect(ctx, (gameBoard.canvas.width / 2) - 150, (gameBoard.canvas.height / 2) - 100, 300, 200, 15);
+            ctx.fill();
             ctx.font = '48px monospace';
             ctx.strokeStyle = 'white';
-            ctx.strokeText('GAME OVER', (gameBoard.canvas.width/2)-120, (gameBoard.canvas.height/2)- 20);
+            ctx.strokeText('GAME OVER', (gameBoard.canvas.width / 2) - 120, (gameBoard.canvas.height / 2) - 20);
             ctx.fillStyle = 'white';
             ctx.font = '16px monospace';
-            ctx.fillText('your final score is: ' + gameBoard.points,(gameBoard.canvas.width/2)-110, (gameBoard.canvas.height/2)+20);
+            ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
         },
-        speed: -1,
+        gameWon: () => {
+            soundStop();
+            soundObjects["gamewon"].play();
+            ctx.fillStyle = 'black';
+            roundedRect(ctx, (gameBoard.canvas.width / 2) - 150, (gameBoard.canvas.height / 2) - 100, 300, 200, 15);
+            ctx.fill();
+            ctx.font = '48px monospace';
+            ctx.strokeStyle = 'white';
+            ctx.strokeText('YOU WON!', (gameBoard.canvas.width / 2) - 100, (gameBoard.canvas.height / 2) - 20);
+            ctx.fillStyle = 'white';
+            ctx.font = '16px monospace';
+            ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
+        },
     };
-
-    //   else {
-    //     /* the viewport is less than 400 pixels wide */
-    //   }
 
     function isIntersect(point, control, x, y) {
         if (point.x >= control.x && point.x <= (control.x + control.width)) {
@@ -777,11 +927,9 @@ $(window).on('load', function () {
 
         if (gameBoard.pause) {
             return;
-        }
-        if (player.lives === 0) {
-            gameBoard.gameOver();
-            return;
-        }
+        };
+
+
         backgroundUpdate();
         //when the player crashes with a dementor
         dementorCrash();
@@ -790,15 +938,39 @@ $(window).on('load', function () {
         //when a player crashes with an owl
         owlCrash();
 
+
+        if (gameBoard.over) {
+            if (player.lives === 0) {
+                gameBoard.gameOver();
+            } else if (finalBoss == undefined) {
+                gameBoard.gameWon();
+            };
+            localStorage.setItem('score', gameBoard.points);
+            if (!localStorage.getItem('n')) {
+                localStorage.setItem('n', 1);
+            }
+            var count = localStorage.getItem('n');
+            localStorage.setItem('Games Played', count);
+            count++;
+            localStorage.setItem('n', count);
+            return;
+
+        }
+        spellCrash();
+
         drawLives();
         drawControls();
 
         dementorGenerator();
         snitchGenerator();
         owlGenerator();
-        bossGenerator();
+        if (finalBoss == undefined) {
+            bossGenerator();
+        }
+        bossSpellGenerator();
 
-        sprites = [dementors, snitchs, owls, bossArr[0]];
+        sprites = [dementors, snitchs, owls, bossArr];
+        // sprites = [dementors, snitchs, owls, bossArr[0]];
 
         if (sprites != undefined) {
             for (let i = 0; i <= sprites.length; i++) {
@@ -807,37 +979,33 @@ $(window).on('load', function () {
             for (let i = 0; i < sprites.length; i++) {
                 removeSprite(sprites[i]);
             };
-        }
-        //make it faster every 1000 frames
-        
+        };
+
         //speed bg every 30 secs
 
         if (gameBoard.frames % 60 === 0) {
             last = now;
             current = Math.ceil(new Date().getTime() / 1000);
-            let dt = current - last
-            if(Math.floor(dt) % 30 === 0){
+            let dt = current - last;
+            if (Math.floor(dt) % 30 === 0) {
                 console.log('30 seconds have passed: ' + dt);
                 gameBoard.speed -= 0.8;
                 background.speed = gameBoard.speed;
-                // background.speed -= 0.8;
-                // for (let i = 0; i < dementors.length; i++) {
-                //     dementors[i].speedX = background.speed;
-                //     console.log(dementors[i].speedX);
-                //     dementors[i].newPos();
-                //     dementors[i].update();
-                // }
-                // for (let i = 0; i < snitchs.length; i++) {
-                //     snitchs[i].speedX = background.speed * 0.2;
-                //     console.log(snitchs[i].speedX);
-                //     snitchs[i].newPos();
-                //     snitchs[i].update();
-                // }
                 console.log(background.speed);
-            }
-        }
-        
-
+            };
+        };
+        if (spells.length > 0) {
+            for (let i = 0; i < spells.length; i++) {
+                spells[i].update();
+                spells[i].newPos();
+            };
+        };
+        if (spellsBoss.length > 0) {
+            for (let i = 0; i < spellsBoss.length; i++) {
+                spellsBoss[i].update();
+                spellsBoss[i].newPos();
+            };
+        };
         player.newPos();
         player.update();
         gameBoard.score();

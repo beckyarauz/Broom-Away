@@ -32,11 +32,11 @@
             </div>
             <div class="btns flex">
                 <button id="start">Start Game</button>
-                <button id="instructions">Intructions</button>
+                <button id="instructions" class="inst">Intructions</button>
             </div>
     
         </section>
-        <section id="rules-1" class="flex hide">
+        <section id="rules-1" class="flex">
             <div class="solid-bg width-stretch">
                 <h2>You are a Wizzard <span id="username"></span>!</h2>
     
@@ -101,7 +101,7 @@
                 </div>
             </div>
         </section>
-        <section id="rules-2" class="flex hide">
+        <section id="rules-2" class="flex">
             <div class="solid-bg width-stretch flex flex-column">
                 <h2>Friends and Enemies</h2>
                 <div id="sprites-info" class="flex flex-column">
@@ -159,7 +159,7 @@
                 </div>
             </div>
         </section>
-        <section id="rules-3" class="flex hide">
+        <section id="rules-3" class="flex">
             <div class="solid-bg width-stretch">
                 <h2>Final Boss</h2>
                 <p>When you reach the final stage you will
@@ -189,10 +189,15 @@
                         <use xlink:href="#leftarrow"></use>
                     </svg>
                 </div>
-                <div id="to-start" class="round flex light">
-                    <img id="castle" src="./images/castle.png" alt="">
+                <div class="round flex light to-start">
+                    <img class="castle" src="./images/castle.png" alt="">
                 </div>
                 <!-- <button id="to-start" class="to-start"><span>Back to Start</span></button> -->
+            </div>
+        </section>
+        <section id="scores" class="flex">
+            <div class="round flex light to-start">
+                <img class="castle" src="./images/castle.png" alt="">
             </div>
         </section>
         <section id="game" class="flex">
