@@ -1,4 +1,4 @@
-myStorage = window.localStorage;
+$('#main').toggle(); 
 
 var queue = new createjs.LoadQueue(true);
 let soundObjects = {};
@@ -19,21 +19,14 @@ function handleFilesLoad(event) {
 }
 
 function handleFilesProgress(event) {
-    document.getElementById('loading').classList.remove('hide');
-    document.getElementById('main').classList.add('hide');
+    
 }
 
 function handleFilesComplete(event) {
-    document.body.style.backgroundImage = "url(" + imageObjects['hw-bg1'].src + ")"
-    $('#intro').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
-    $('#rules-1').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
-    $('#rules-2').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
-    $('#rules-3').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
-    $('#scores').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
-    // console.log($('#houses')).appendChild();
-    document.getElementById('loading').classList.add('hide');
-    document.getElementById('main').classList.remove('hide');
-    console.log(bossImageObjects);
+    document.body.style.backgroundImage = "url(" + imageObjects['hw-bg1'].src + ")";
+    $('.bricks').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
+    $('#loading').toggle();
+    $('#main').toggle();    
 }
 
 queue.loadManifest('manifest.json');
@@ -44,19 +37,18 @@ queue.on("progress", handleFilesProgress, this);
 
 
 $(window).on('load', function () {
-    // location.reload(true);
     if (window.matchMedia("(max-height: 375px)").matches) {
         $('#bosses div').removeClass('row');
-    }
+    };
 
     function soundStop() {
         for (sound in soundObjects) {
             if (soundObjects[sound].currentTime > 0) {
                 soundObjects[sound].pause();
                 soundObjects[sound].currentTime = 0;
-            }
-        }
-    }
+            };
+        };
+    };
     var w = window.innerWidth;
     var h = window.innerHeight;
 
@@ -155,7 +147,7 @@ $(window).on('load', function () {
     inst.click(function () {
         soundStop();
         soundObjects["click1"].play();
-        $(this).parentsUntil('#main').toggle();
+        $(this).parent().parent().toggle();
         $(this).parentsUntil('#main').next().toggle();
         if (name == undefined) {
             name = prompt("What's your name?");
@@ -164,7 +156,7 @@ $(window).on('load', function () {
     })
 
     nextBtn.click(function () {
-        $(this).parentsUntil('#main').toggle();
+        $(this).parent().parent().toggle();
         $(this).parentsUntil('#main').next().toggle();
         soundStop();
         soundObjects["click1"].play();
@@ -172,21 +164,21 @@ $(window).on('load', function () {
 
 
     backBtn.click(function () {
-        $(this).parentsUntil('#main').toggle();
+        $(this).parent().parent().toggle();
         $(this).parentsUntil('#main').prev().toggle();
         soundStop();
         soundObjects["click1"].play();
     });
 
     castle.click(function () {
-        $(this).parentsUntil('#main').toggle();
+        $(this).parent().parent().toggle();
         $('#intro').toggle();
         soundStop();
         soundObjects["tone2"].play();
     });
 
     background = {
-        img: imageObjects['bgBig'],
+        img: '',
         x: 0,
         speed: 0,
         move: function () {
@@ -195,11 +187,11 @@ $(window).on('load', function () {
         },
 
         draw: function () {
-            ctx.drawImage(imageObjects['bgBig'], this.x, 0);
+            ctx.drawImage(this.img, this.x, 0);
             if (this.speed < 0) {
-                ctx.drawImage(imageObjects['bgBig'], this.x + gameBoard.canvas.width, 0);
+                ctx.drawImage(this.img, this.x + gameBoard.canvas.width, 0);
             } else {
-                ctx.drawImage(imageObjects['bgBig'], this.x - imageObjects['bgBig'].width, 0);
+                ctx.drawImage(this.img, this.x - this.img.width, 0);
             };
         },
     };
@@ -775,11 +767,12 @@ $(window).on('load', function () {
         lastScore: localStorage.getItem('score'),
         canvas: document.createElement("canvas"),
         start: function () {
-            if (window.matchMedia("(max-height: 376px)").matches) {
+            if (window.matchMedia("(max-height: 375px)").matches) {
                 this.canvas.width = 660;
                 this.canvas.height = 370;
                 background.img = imageObjects['bgSmall'];
             } else {
+                background.img = imageObjects['bgBig']
                 this.canvas.width = 750;
                 this.canvas.height = 500;
             };
