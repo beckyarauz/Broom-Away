@@ -1,42 +1,5 @@
-$('#main').toggle(); 
 
-var queue = new createjs.LoadQueue(true);
-let soundObjects = {};
-let imageObjects = {};
-let bossImageObjects = {};
-
-function handleFilesLoad(event) {
-    var item = event.item;
-    if (item.type == "sound") {
-        soundObjects[item.id] = new Audio(item.src);
-    } else if (item.type == "image") {
-        imageObjects[item.id] = new Image();
-        imageObjects[item.id].src = item.src;
-        if (item.id.includes('boss')) {
-            bossImageObjects[item.id] = item;
-        }
-    }
-}
-
-function handleFilesProgress(event) {
-    
-}
-
-function handleFilesComplete(event) {
-    document.body.style.backgroundImage = "url(" + imageObjects['hw-bg1'].src + ")";
-    $('.bricks').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
-    $('#loading').toggle();
-    $('#main').toggle();    
-}
-
-queue.loadManifest('manifest.json');
-
-queue.on("fileload", handleFilesLoad, this);
-queue.on("complete", handleFilesComplete, this);
-queue.on("progress", handleFilesProgress, this);
-
-
-$(window).on('load', function () {
+// $(window).on('load', function () {
     if (window.matchMedia("(max-height: 375px)").matches) {
         $('#bosses div').removeClass('row');
     };
@@ -68,13 +31,10 @@ $(window).on('load', function () {
     var rules3 = $('#rules-3');
     var scores = $('#scores');
 
-    // var nextBtn1 = $('#nextBtn1');
-    // var nextBtn2 = $('#nextBtn2');
     var nextBtn = $('.next');
 
     var backBtn = $('.back');
 
-    // var toStart = document.getElementById('to-start');
     var castle = $('.to-start');
 
     var name;
@@ -269,309 +229,6 @@ $(window).on('load', function () {
         background.draw();
     };
 
-    function drawLives() {
-        space = 0;
-        for (let i = 0; i < lives.length; i++) {
-            lives[i].update(space);
-            space += 70;
-        };
-    };
-
-    function Player(x, y, width, height) {
-        this.speedX = 0;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-        this.lives = 5;
-        this.update = function () {
-            ctx.drawImage(imageObjects['icon'], this.x, this.y, this.width, this.height);
-        };
-
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-
-        this.moveUp = () => {
-            this.speedY -= 5;
-        };
-        this.moveDown = () => {
-            this.speedY += 5;
-        };
-        this.moveLeft = () => {
-            this.speedX -= 5;
-        };
-        this.moveRight = () => {
-            this.speedX += 5;
-        };
-
-        this.stopMove = () => {
-            this.speedX = 0;
-            this.speedY = 0;
-        };
-
-        this.left = function () {
-            return this.x;
-        };
-        this.right = function () {
-            return (this.x + this.width);
-        };
-        this.top = function () {
-            return this.y;
-        };
-        this.bottom = function () {
-            return this.y + (this.height);
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()));
-        };
-    };
-
-    function Dementor(x, y) {
-        this.speedX = gameBoard.speed;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = 60;
-        this.width = 60;
-        this.update = function () {
-            ctx.drawImage(imageObjects['dementor'], this.x, this.y, this.width, this.height);
-        };
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-
-        this.left = function () {
-            return this.x
-        };
-        this.right = function () {
-            return (this.x + this.width)
-        };
-        this.top = function () {
-            return this.y
-        };
-        this.bottom = function () {
-            return this.y + (this.height)
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()));
-        };
-    };
-
-    function Boss(x, y, speed) {
-        this.speedX = speed;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = 80;
-        this.width = 60;
-        this.hp = 1000;
-        this.update = function () {
-            ctx.drawImage(imageObjects['boss' + ranBoss], this.x, this.y, this.width, this.height);
-            ctx.font = '18px monospace';
-            ctx.fillStyle = 'black';
-            ctx.fillText('Boss HP', gameBoard.canvas.width - 170, 35);
-            ctx.fillStyle = bossImageObjects['boss' + ranBoss].color;
-            // ctx.fillStyle = 'blue';
-            roundedRect(ctx, gameBoard.canvas.width - 200, 40, this.hp * 0.15, 20, 5);
-            ctx.fill();
-            ctx.strokeStyle = 'black';
-            roundedRect(ctx, gameBoard.canvas.width - 200, 40, 1000 * 0.15, 20, 5);
-            ctx.stroke();
-        };
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-        this.borderTop = false;
-
-        this.left = function () {
-            return this.x;
-        };
-        this.right = function () {
-            return (this.x + this.width);
-        };
-        this.top = function () {
-            return this.y;
-        };
-        this.bottom = function () {
-            return this.y + (this.height);
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()));
-        };
-    };
-
-    function Coin(x, y) {
-        this.speedX = gameBoard.speed * 1.1;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = 20;
-        this.width = 35;
-        this.update = function () {
-            ctx.drawImage(imageObjects['snitch'], this.x, this.y, this.width, this.height);
-        };
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-
-        this.left = function () {
-            return this.x
-        };
-        this.right = function () {
-            return (this.x + this.width)
-        };
-        this.top = function () {
-            return this.y
-        };
-        this.bottom = function () {
-            return this.y + (this.height)
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()))
-        };
-    }
-
-    function Owl(x, y) {
-        this.speedX = 0;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = 30;
-        this.width = 25;
-        this.update = function () {
-            ctx.drawImage(owl, this.x, this.y, this.width, this.height);
-        };
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-
-        this.left = function () {
-            return this.x
-        };
-        this.right = function () {
-            return (this.x + this.width)
-        };
-        this.top = function () {
-            return this.y
-        };
-        this.bottom = function () {
-            return this.y + (this.height)
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()))
-        };
-    };
-
-    function Spell(x, y) {
-        this.speedX = 5;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = 15;
-        this.width = 25;
-        this.update = function () {
-            ctx.drawImage(imageObjects['spell'], this.x, this.y, this.width, this.height);
-        };
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-
-        this.left = function () {
-            return this.x
-        };
-        this.right = function () {
-            return (this.x + this.width)
-        };
-        this.top = function () {
-            return this.y
-        };
-        this.bottom = function () {
-            return this.y + (this.height)
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()))
-        };
-    };
-
-    function BossSpell(x, y) {
-        this.speedX = -5;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.height = 15;
-        this.width = 25;
-        this.update = function () {
-            ctx.drawImage(imageObjects['boss-spell'], this.x, this.y, this.width, this.height);
-        };
-        this.newPos = function () {
-            this.x += this.speedX;
-            this.y += this.speedY;
-        };
-
-        this.left = function () {
-            return this.x
-        };
-        this.right = function () {
-            return (this.x + this.width)
-        };
-        this.top = function () {
-            return this.y
-        };
-        this.bottom = function () {
-            return this.y + (this.height)
-        };
-        this.crashWith = function (obstacle) {
-            return !((this.bottom() < obstacle.top()) ||
-                (this.top() > obstacle.bottom()) ||
-                (this.right() < obstacle.left()) ||
-                (this.left() > obstacle.right()))
-        };
-    };
-
-    function Life() {
-        this.update = (space) => {
-            ctx.drawImage(imageObjects['star'], 230 + space, gameBoard.canvas.height - 50, 30, 30);
-        };
-    };
-
-    function Control(direction, x, y, height, width, name) {
-        this.id = name;
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-        this.direction = direction;
-        this.update = () => {
-            ctx.drawImage(direction, this.x, this.y, this.height, this.width);
-        };
-    }
-
     function drawControls() {
         controls.forEach((control) => {
             control.update();
@@ -666,7 +323,7 @@ $(window).on('load', function () {
                     };
                 };
             };
-            if (finalBoss != undefined && spells.length > 0 && spells.length > 0) {
+            if (finalBoss != undefined && spells.length > 0) {
                 if (spells[i] != undefined) {
                     if (spells[i].crashWith(bossArr[0])) {
                         console.log('Boss hit!');
@@ -687,53 +344,6 @@ $(window).on('load', function () {
                 };
             };
         };
-    };
-
-    function dementorGenerator() {
-        if (Math.random() < 1 - Math.pow(0.993, gameBoard.frames / 4000)) {
-            var y = Math.floor(Math.random() * (gameBoard.canvas.height));
-            var dem = new Dementor(gameBoard.canvas.width, y);
-            dementors.push(dem);
-        };
-    };
-
-    function snitchGenerator() {
-        if (gameBoard.frames % 80 === 0) {
-            var t = Math.floor(Math.random() * (gameBoard.canvas.height));
-            var sni = new Coin(gameBoard.canvas.width, t);
-            snitchs.push(sni);
-        };
-    };
-
-    function bossGenerator() {
-        if (gameBoard.points >= 1000 && gameBoard.points <= 1500) {
-            finalBoss = new Boss(gameBoard.canvas.width - 100, 200);
-            bossArr.push(finalBoss);
-        };
-    };
-
-    function owlGenerator() {
-        if (gameBoard.frames % 1000 === 0) {
-            var o = Math.floor(Math.random() * (gameBoard.canvas.height));
-            var ranOwl = Math.floor(Math.random() * (4));
-            owl = new Image();
-            if (ranOwl == 0) {
-                ranOwl++;
-            }
-            owl.src = './images/owl-' + ranOwl + '.png';
-            var owlSprite = new Owl(gameBoard.canvas.width, o);
-            owls.push(owlSprite);
-        };
-    };
-    function bossSpellGenerator() {
-        if (gameBoard.frames % 30 === 0) {
-            if (finalBoss != undefined) {
-                var bSpell = new BossSpell(bossArr[0].x, bossArr[0].y + bossArr[0].height / 2);
-                // soundStop();
-                soundObjects['boss-shoot'].play();
-                spellsBoss.push(bSpell);
-            }
-        }
     };
 
     startButton.onclick = () => {
@@ -779,8 +389,7 @@ $(window).on('load', function () {
             ctx = this.canvas.getContext("2d");
             document.getElementById('game').appendChild(this.canvas);
             for (let i = 0; i < player.lives; i++) {
-                var life = new Life();
-                lives.push(life);
+                lives.push('life');
             };
             ranBoss = Math.ceil(Math.random() * (4));
             
@@ -849,6 +458,13 @@ $(window).on('load', function () {
             ctx.font = '16px monospace';
             ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
         },
+        drawLives: () => {
+            space = 0;
+            for (let i = 0; i < lives.length; i++) {
+                ctx.drawImage(imageObjects['star'], 230 + space, gameBoard.canvas.height - 50, 30, 30);
+                space += 70;
+            };
+        }
     };
 
     function isIntersect(point, control, x, y) {
@@ -951,7 +567,7 @@ $(window).on('load', function () {
         }
         spellCrash();
 
-        drawLives();
+        gameBoard.drawLives();
         drawControls();
 
         dementorGenerator();
@@ -963,7 +579,6 @@ $(window).on('load', function () {
         bossSpellGenerator();
 
         sprites = [dementors, snitchs, owls, bossArr];
-        // sprites = [dementors, snitchs, owls, bossArr[0]];
 
         if (sprites != undefined) {
             for (let i = 0; i <= sprites.length; i++) {
@@ -1005,4 +620,4 @@ $(window).on('load', function () {
 
         requestAnimationFrame(updateGameArea);
     }
-})
+// })
