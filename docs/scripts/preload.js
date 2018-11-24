@@ -26,7 +26,12 @@ function handleFilesComplete(event) {
     document.body.style.backgroundImage = "url(" + imageObjects['hw-bg1'].src + ")";
     $('.bricks').css('background-image', 'url(' + imageObjects['bricks'].src + ')');
     $('#loading').toggle();
-    $('#main').toggle();    
+    $('#main').toggle();  
+    if (userName == undefined || userName.length == 0) {
+        var name = prompt("What's your name?");
+        userName = name;
+        username.innerHTML = name;
+    }  
 }
 
 queue.loadManifest('manifest.json');

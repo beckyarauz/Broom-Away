@@ -10,6 +10,16 @@ body{
     flex-direction: column;
     margin:0;
 }
+
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+ }
+
+ th,td{
+     width:150px;
+ }
+
 body,#intro,#game,#bosses,.scores,.row,.round,.c-round,.container,.first{
     justify-content: center;
     align-items: center;

@@ -1,8 +1,10 @@
-
-    function dementorGenerator() {
+var speeds = [1.5,1.75,2,2.5];
+function dementorGenerator() {
+        var ranIdx = Math.floor(Math.random() * (speeds.length));
+        var randomSpeed = speeds[ranIdx];
         if (Math.random() < 1 - Math.pow(0.993, gameBoard.frames / 4000)) {
             var y = Math.floor(Math.random() * (gameBoard.canvas.height));
-            var dem = new Dementor(gameBoard.canvas.width, y);
+            var dem = new Dementor(gameBoard.canvas.width, y,(gameBoard.speed * randomSpeed));
             dementors.push(dem);
         };
     };
@@ -16,7 +18,7 @@
     };
 
     function bossGenerator() {
-        if (gameBoard.points >= 1000 && gameBoard.points <= 1500) {
+        if (gameBoard.points >= 18000 && gameBoard.points <= 18500) {
             finalBoss = new Boss(gameBoard.canvas.width - 100, 200);
             bossArr.push(finalBoss);
         };
@@ -36,10 +38,9 @@
         };
     };
     function bossSpellGenerator() {
-        if (gameBoard.frames % 30 === 0) {
+        if (gameBoard.frames % 60 === 0) {
             if (finalBoss != undefined) {
                 var bSpell = new BossSpell(bossArr[0].x, bossArr[0].y + bossArr[0].height / 2);
-                // soundStop();
                 soundObjects['boss-shoot'].play();
                 spellsBoss.push(bSpell);
             }

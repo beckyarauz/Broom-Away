@@ -1,4 +1,4 @@
-function Player(x, y, width, height) {
+function Player(x, y, width, height,house) {
     this.speedX = 0;
     this.speedY = 0;
     this.x = x;
@@ -6,6 +6,8 @@ function Player(x, y, width, height) {
     this.height = height;
     this.width = width;
     this.lives = 5;
+    this.hp = 1000;
+    this.house = house;
     this.update = function () {
         ctx.drawImage(imageObjects['icon'], this.x, this.y, this.width, this.height);
     };
@@ -53,8 +55,8 @@ function Player(x, y, width, height) {
     };
 };
 
-function Dementor(x, y) {
-    this.speedX = gameBoard.speed;
+function Dementor(x, y,speed) {
+    this.speedX = speed ;
     this.speedY = 0;
     this.x = x;
     this.y = y;
@@ -98,15 +100,26 @@ function Boss(x, y) {
     this.hp = 1000;
     this.update = function () {
         ctx.drawImage(imageObjects['boss' + ranBoss], this.x, this.y, this.width, this.height);
+        //draw hp 
         ctx.font = '18px monospace';
         ctx.fillStyle = 'black';
         ctx.fillText('Boss HP', gameBoard.canvas.width - 170, 35);
         ctx.fillStyle = bossImageObjects['boss' + ranBoss].color;
-        // ctx.fillStyle = 'blue';
         roundedRect(ctx, gameBoard.canvas.width - 200, 40, this.hp * 0.15, 20, 5);
         ctx.fill();
         ctx.strokeStyle = 'black';
         roundedRect(ctx, gameBoard.canvas.width - 200, 40, 1000 * 0.15, 20, 5);
+        ctx.stroke();
+
+
+        ctx.font = '18px monospace';
+        ctx.fillStyle = 'black';
+        ctx.fillText('Player HP', 90, 35);
+        ctx.fillStyle = houses[player.house];
+        roundedRect(ctx, 70, 40, player.hp * 0.15, 20, 5);
+        ctx.fill();
+        ctx.strokeStyle = 'black';
+        roundedRect(ctx, 70, 40, 1000 * 0.15, 20, 5);
         ctx.stroke();
     };
     this.newPos = function () {

@@ -8,6 +8,10 @@
             "src": "./images/hw-bg1.jpg"
         },
         {
+            "id": "reset",
+            "src": "./images/reset-icon.png"
+        },
+        {
             "id": "bricks",
             "src": "./images/bricks2.jpg"
         },
