@@ -1,4 +1,3 @@
-var speeds = [1.5,1.75,2,2.5];
 function dementorGenerator() {
         var ranIdx = Math.floor(Math.random() * (speeds.length));
         var randomSpeed = speeds[ranIdx];
@@ -18,10 +17,12 @@ function dementorGenerator() {
     };
 
     function bossGenerator() {
-        if (gameBoard.points >= 18000 && gameBoard.points <= 18500) {
-            finalBoss = new Boss(gameBoard.canvas.width - 100, 200);
-            bossArr.push(finalBoss);
-        };
+        if (finalBoss == undefined) {
+            if (gameBoard.points >= 18000 && gameBoard.points <= 18500) {
+                finalBoss = new Boss(gameBoard.canvas.width - 100, 200);
+                bossArr.push(finalBoss);
+            };
+        }
     };
 
     function owlGenerator() {

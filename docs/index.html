@@ -21,7 +21,7 @@
             <h1>LOADING...</h1>
         </div>
     </section>
-    <main id="main" class="flex">
+    <main id="main" class="flex" style="display:none">
         <button id="clear-cache">Clear</button>
         <section id="intro" class="flex flex-column bricks">
             <h1>Choose your House</h1>
@@ -209,6 +209,7 @@
                     <table>
                         <thead>
                             <tr>
+                                <th class="number">#</th>
                                 <th>Player</th>
                                 <th>Score</th>
                                 <th>House</th>
@@ -233,10 +234,13 @@
 
 <script src="https://code.createjs.com/1.0.0/preloadjs.min.js"></script>
 <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+<script src="./scripts/variables.js"></script>
 <script src="./scripts/preload.js"></script>
+<script src="./scripts/gameSetup.js"></script>
+<script src="./scripts/click-handlers.js"></script>
+<script src="./scripts/collision-detectors.js"></script>
 <script src="./scripts/classes.js"></script>
 <script src="./scripts/sprite-generators.js"></script>
 <script src="script.js"></script>
-<!-- <script src="scriptTest.js"></script> -->
 
 </html>

@@ -110,8 +110,7 @@ function Boss(x, y) {
         ctx.strokeStyle = 'black';
         roundedRect(ctx, gameBoard.canvas.width - 200, 40, 1000 * 0.15, 20, 5);
         ctx.stroke();
-
-
+        //player hp
         ctx.font = '18px monospace';
         ctx.fillStyle = 'black';
         ctx.fillText('Player HP', 90, 35);
@@ -149,7 +148,7 @@ function Boss(x, y) {
 };
 
 function Coin(x, y) {
-    this.speedX = gameBoard.speed * 1.1;
+    this.speedX = gameBoard.speed * 1.5;
     this.speedY = 0;
     this.x = x;
     this.y = y;

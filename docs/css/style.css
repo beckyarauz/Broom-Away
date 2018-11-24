@@ -1,35 +1,53 @@
-@font-face{
+@font-face {
     font-family: "Harry P";
     src: url(../font/harryP.TTF);
 }
-body{
+
+body {
     background-position: center;
     background-repeat: repeat;
     background-size: 400px 400px;
     height: 100vh;
     flex-direction: column;
-    margin:0;
+    margin: 0;
 }
 
-table, th, td {
+table,
+th,
+td {
     border: 1px solid white;
     border-collapse: collapse;
- }
+}
 
- th,td{
-     width:150px;
- }
+th,
+td {
+    width: 150px;
+}
 
-body,#intro,#game,#bosses,.scores,.row,.round,.c-round,.container,.first{
+.number {
+    width: 25px;
+}
+
+body,
+#intro,
+#game,
+#bosses,
+.scores,
+.row,
+.round,
+.c-round,
+.container,
+.first {
     justify-content: center;
     align-items: center;
 }
-* p{
-    margin:0;
+
+* p {
+    margin: 0;
     font-size: 1.1rem;
 }
 
-button{
+button {
     border: none;
     border-radius: 10px;
     padding: 10px;
@@ -40,79 +58,93 @@ button{
     -webkit-appearance: button;
 }
 
-button:hover{
+button:hover {
     background-color: brown;
     color: white;
 }
 
-.container{
+.container {
     min-width: 150px;
     max-width: 150px;
     margin-right: 25px;
 }
-.container div{
-    margin:3px;
+
+.container div {
+    margin: 3px;
 }
 
-.first{
+.first {
     justify-content: space-between;
 }
 
-.back ,.next, .to-start{
+.back,
+.next,
+.to-start {
     position: absolute;
     bottom: 30px;
 }
-.next{
-    right:40px;
+
+.next {
+    right: 40px;
 }
 
-.to-start{
-    right:100px;
+.to-start {
+    right: 100px;
+}
+
+#highScores .to-start {
+    right: 40px !important;
 }
 
 /* svg resize */
-.svg-arrow{
+.svg-arrow {
     height: 32px;
     width: 32px;
 }
 
-.to-start{
-    min-width: 65px;
+.to-start {
+    /* max-width: 65px; */
     max-width: 65px;
     max-height: 65px;
 }
 
-#controls{
+#controls {
     justify-content: space-around;
     padding: 20px;
     margin: 0;
 }
+
 #controls img {
     height: 50px;
-    width:50px;
-}
-#clear-cache{
-    position: absolute;
-    top:2px;
-    font-size: 15px;
-}
-
-#phone-controls, #keyboard-controls{
-    width:400px;
-}
-#phone-controls{
-    display: none;
-};
-
-#s-btn{
     width: 50px;
 }
 
-#keyboard-controls{
+#clear-cache {
+    position: absolute;
+    top: 2px;
+    font-size: 15px;
+}
+
+#phone-controls,
+#keyboard-controls {
+    width: 400px;
+}
+
+#phone-controls {
+    display: none;
+}
+
+;
+
+#s-btn {
+    width: 50px;
+}
+
+#keyboard-controls {
     align-items: center;
 }
 
-.c-round{
+.c-round {
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -120,242 +152,290 @@ button:hover{
     margin: 5px 2px;
 }
 
-#wand{
+#wand {
     width: 60px;
     height: 60px;
     margin-bottom: 15px;
 }
-#wand-icon{
+
+#wand-icon {
     max-width: 30px;
     max-height: 30px;
 }
 
-.c-round:hover{
+.c-round:hover {
     background-color: white;
 }
 
-#space-key{
+#space-key {
     height: 40px;
     width: 150px;
     background-color: antiquewhite;
-    margin:10px;
+    margin: 10px;
     margin-bottom: 15px;
 }
-.arrow-keys{
+
+.arrow-keys {
     flex-direction: column;
     align-items: center;
 }
-.arrow{
+
+.arrow {
     padding: 3px;
     text-align: center;
-    width:40px;
+    width: 40px;
     height: 40px;
-    margin:5px 0;
+    margin: 5px 0;
 }
 
-h1,h2{
-    margin:0;
+h1,
+h2 {
+    margin: 0;
     font-family: "Harry P";
     color: rgb(218, 216, 216);
     animation: float 6s ease-in-out infinite;
 }
-h1{
+
+h1 {
     text-shadow: 4px 3px 10px rgba(46, 42, 23, 0.94);
     font-size: 80px;
 }
-h2{
+
+h2 {
     font-size: 60px;
 }
 
-#intro, #rules-1,#rules-2,#rules-3,#scores{
+#intro,
+#rules-1,
+#rules-2,
+#rules-3,
+#scores {
     position: relative;
     width: 80vw;
     min-width: 550px;
     height: 80vh;
-    padding:20px;
+    padding: 20px;
     border-radius: 15px;
     background-size: cover;
 }
 
-.width-stretch{
-    width:100%;
+.width-stretch {
+    width: 100%;
 }
 
-#houses{
+#houses {
     margin-bottom: 20px;
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 400px;
 }
 
-.house{
-    width:10em;
+.house {
+    width: 10em;
     height: 10em;
-    margin:10px;
+    margin: 10px;
     box-sizing: border-box;
 }
 
-.house:hover{
+.house:hover {
     border-radius: 50%;
-    border:2px solid white;
+    border: 2px solid white;
 }
 
-.solid-bg{
-    background-color: rgba(0,0,0,0.6);
+.solid-bg {
+    background-color: rgba(0, 0, 0, 0.6);
     font-family: monospace;
     border-radius: 15px;
     color: white;
     padding: 20px;
     text-align: center;
 }
+
 .solid-bg h2 {
     text-align: center;
 }
 
-.round{
+.round {
     border-radius: 50%;
 }
-.to-start img{
+
+.to-start img {
     height: 35px;
     min-width: 35px;
     max-width: 35px;
 }
 
-.round:hover{
+.round:hover {
     opacity: 0.5;
 }
 
-.light{
+.light {
     background-color: beige;
 }
-.dark{
+
+.dark {
     background-color: rgb(41, 150, 122);
 }
 
-.enemy{
-    height:60px;
-    width:40px;
-    margin:10px 20px;
+.enemy {
+    height: 60px;
+    width: 40px;
+    margin: 10px 20px;
 }
-.wrap{
+
+.wrap {
     flex-wrap: wrap;
 }
 
-.text{
-    width:300px;
+.text {
+    width: 300px;
 }
 
-#snitch,.castle{
-    margin:15px 5px;
-    height:20px;
-    width:40px;
+#snitch,
+.castle {
+    margin: 15px 10px;
+    /* height: 20px; */
+    width: 40px;
 }
 
-#bosses{
+#bosses {
     margin-top: 20px;
     width: 100%;
 }
 
-#bosses .row{
+#bosses .row {
     justify-content: space-evenly;
 }
-#keyboard-controls .row{
+
+#keyboard-controls .row {
     width: 150px;
 }
 
-.owl{
+.owl {
     height: 30px;
     width: 30px;
-    margin:10px;
+    margin: 10px;
 }
-#sprites-info{
-    height:100%;
+
+#sprites-info {
+    height: 100%;
     justify-content: space-around;
     align-items: center;
 }
 
-#loading{
+#loading {
     background-color: black;
-    width:100vw;
+    width: 100vw;
     height: 100vh;
     justify-content: center;
     align-items: center;
 }
-#loading h1{
-    color:white;
+
+#loading h1 {
+    color: white;
     font-family: monospace;
     font-size: 48px;
 }
 
-.flex{
+.flex {
     display: flex;
 }
 
-.flex-column{
+.flex-column {
     flex-direction: column;
 }
-.row{
+
+.row {
     width: 100%;
     margin-bottom: 10px;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
 @keyframes float {
-	0% {
-		/* text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
-		transform: translatey(0px);
-	}
-	50% {
-		/* text-shadow: 0 25px 15px 0px rgba(0,0,0,0.2); */
-		transform: translatey(-15px);
-	}
-	100% {
-		/* text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
-		transform: translatey(0px);
-	}
+    0% {
+        /* text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+        transform: translatey(0px);
+    }
+
+    50% {
+        /* text-shadow: 0 25px 15px 0px rgba(0,0,0,0.2); */
+        transform: translatey(-15px);
+    }
+
+    100% {
+        /* text-shadow: 0 5px 15px 0px rgba(0,0,0,0.6); */
+        transform: translatey(0px);
+    }
 }
 
 @media only screen and (max-width: 667px) {
-    p{
+    p {
         font-size: 0.8rem;
         margin-top: 5px;
     }
-    #keyboard-controls{
+
+    #keyboard-controls {
         display: none;
     }
-    #phone-controls{
+
+    #phone-controls {
         display: flex;
     }
+
     .house {
-        /* display: none; */
         height: 100px;
         width: 100px;
-        margin:5px;
+        margin: 5px;
     }
-    #houses{
-    width: 500px;
+
+    #houses {
+        width: 500px;
     }
-    h1{
+
+    h1 {
         font-size: 3em;
     }
-    h2{
+
+    h2 {
         font-size: 2.5em;
     }
-    .enemy{
+
+    .enemy {
         width: 25px;
         height: 45px;
     }
-    .owl{
+
+    .owl {
         width: 20px;
         height: 20px;
     }
-    #bosses {
-        justify-content: space-around;
+
+    #bosses .row {
+        width: 200px;
     }
-    .boss{
-        margin:0 15px;
+
+    .boss {
+        margin: 0 15px;
+    }
+
+    #rules-3 .castle {
+        max-height: 30px;
+        max-width: 20px;
+        margin: 10px 15px;
+    }
+
+    #scores .to-start {
+        right: 40px;
+        top: 30px;
+        height: 50px;
+    }
+
+    .castle {
+        max-height: 30px;
+        max-width: 20px;
+        margin: 5px 10px;
     }
 }

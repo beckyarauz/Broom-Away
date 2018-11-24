@@ -1,9 +1,11 @@
-$('#main').toggle(); 
+$(function () {
+    $("#svg-html").load("./svg/svgs.html");
+});
 
-var queue = new createjs.LoadQueue(true);
-let soundObjects = {};
-let imageObjects = {};
-let bossImageObjects = {};
+let queue = new createjs.LoadQueue(true);
+soundObjects = {};
+imageObjects = {};
+bossImageObjects = {};
 
 function handleFilesLoad(event) {
     var item = event.item;
@@ -19,7 +21,6 @@ function handleFilesLoad(event) {
 }
 
 function handleFilesProgress(event) {
-    
 }
 
 function handleFilesComplete(event) {
