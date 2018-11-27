@@ -91,6 +91,8 @@ gameBoard = {
         ctx.fillStyle = 'white';
         ctx.font = '16px monospace';
         ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
+        ctx.font = '36px monospace';
+        ctx.fillText('Play Again?', (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70);
     },
     gameWon: () => {
         soundStop();
@@ -104,6 +106,8 @@ gameBoard = {
         ctx.fillStyle = 'white';
         ctx.font = '16px monospace';
         ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
+        ctx.font = '36px monospace';
+        ctx.fillText('Play Again?' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70);
     },
     drawLives: () => {
         space = 0;
@@ -144,6 +148,12 @@ reset = {
     draw: function () {
         ctx.drawImage(imageObjects["reset"], this.x, this.y, this.width, this.height);
     },
+};
+reload = {
+    width: 30,
+    height: 30,
+    x: 25,
+    y: 25,
 };
 
 function compareNumbers(a, b) {
@@ -309,6 +319,17 @@ function isIntersect(point, btn, x, y) {
         return true;
     }
 };
+function isIntersectPlay(point, x, y,width,height) {
+    if (point.x >= x && point.x <= (x + width)) {
+        x = true;
+    };
+    if (point.y >= y && point.y <= (y + height)) {
+        y = true;
+    };
+    if (x && y) {
+        return true;
+    }
+};
 
 function resetVariables() {
     ranBoss = undefined;
@@ -356,14 +377,21 @@ function process_touchstart(ev) {
     var y = false;
     var xReset = false;
     var yReset = false;
+    var xReload = false;
+    var yReload = false;
     const mousePoint = {
         x: ev.touches[0].clientX - ((w - gameBoard.canvas.width) / 2),
         y: ev.touches[0].clientY - ((h - gameBoard.canvas.height) / 2),
     };
+    //reset touch
     if (isIntersect(mousePoint,reset, xReset, yReset)) {
         resetVariables();
     };
-
+    //reload touch
+    if (isIntersectPlay(mousePoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70,100,36)) {
+        location.reload();
+    };
+    //controls touch
     controls.forEach(control => {
         if (isIntersect(mousePoint, control, x, y)) {
             switch (control) {
@@ -401,6 +429,10 @@ gameBoard.canvas.onmousedown = (e) => {
     };
     if (isIntersect(mouseClickPoint,reset, xReset1, yReset1)) {
         resetVariables();
+    };
+
+    if (isIntersectPlay(mouseClickPoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70,100,36)) {
+        location.reload();
     };
 };
 

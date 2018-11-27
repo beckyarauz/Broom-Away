@@ -5,7 +5,7 @@ function Player(x, y, width, height,house) {
     this.y = y;
     this.height = height;
     this.width = width;
-    this.lives = 5;
+    this.lives = 1;
     this.hp = 1000;
     this.house = house;
     this.update = function () {
