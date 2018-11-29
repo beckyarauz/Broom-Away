@@ -266,6 +266,7 @@ function float(sp) {
         };
     };
 };
+
 function backgroundUpdate() {
     background.move();
     background.draw();
@@ -277,17 +278,17 @@ function drawControls() {
     });
 };
 
-function saveScore(){
+function saveScore() {
     localStorage.setItem('score-' + plays, gameBoard.points);
-        var count = plays;
-        localStorage.setItem('Games Played', count);
-        count++;
-        localStorage.setItem('n', count);
-        localStorage.setItem(`Player-${plays}`, userName);
-        localStorage.setItem(`House-${plays}`, house);
+    var count = plays;
+    localStorage.setItem('Games Played', count);
+    count++;
+    localStorage.setItem('n', count);
+    localStorage.setItem(`Player-${plays}`, userName);
+    localStorage.setItem(`House-${plays}`, house);
 }
 
-function drawSpells() { 
+function drawSpells() {
     if (spells.length > 0) {
         for (let i = 0; i < spells.length; i++) {
             spells[i].update();
@@ -300,24 +301,13 @@ function drawSpells() {
             spellsBoss[i].newPos();
         };
     };
- };
+};
 
 function isIntersect(point, btn, x, y) {
     if (point.x >= btn.x && point.x <= (btn.x + btn.width)) {
         x = true;
     };
     if (point.y >= btn.y && point.y <= (btn.y + btn.height)) {
-        y = true;
-    };
-    if (x && y) {
-        return true;
-    }
-};
-function isIntersectPlay(point, x, y,width,height) {
-    if (point.x >= x && point.x <= (x + width)) {
-        x = true;
-    };
-    if (point.y >= y && point.y <= (y + height)) {
         y = true;
     };
     if (x && y) {
@@ -346,7 +336,7 @@ function resetVariables() {
     spells = [];
     spellsBoss = [];
 
-    if(gameBoard.over){
+    if (gameBoard.over) {
         gameBoard.over = false;
         $('#game').toggle();
         $('#intro').toggle();
@@ -390,9 +380,9 @@ function process_touchstart(ev) {
         y: ev.touches[0].clientY - ((h - gameBoard.canvas.height) / 2),
     };
     //reset touch
-    if (isIntersect(mousePoint,reset, xReset, yReset)) {
+    if (isIntersect(mousePoint, reset, xReset, yReset)) {
         resetVariables();
-        if(gameBoard.over){
+        if (gameBoard.over) {
             alert('its over!');
         }
     };
@@ -432,11 +422,11 @@ gameBoard.canvas.onmousedown = (e) => {
         x: e.clientX - ((w - gameBoard.canvas.width) / 2),
         y: e.clientY - ((h - gameBoard.canvas.height) / 2),
     };
-    if (isIntersect(mouseClickPoint,reset, xReset1, yReset1)) {
+    if (isIntersect(mouseClickPoint, reset, xReset1, yReset1)) {
         resetVariables();
     };
 
-    if (isIntersectPlay(mouseClickPoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70,100,36)) {
+    if (isIntersectPlay(mouseClickPoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70, 100, 36)) {
         // location.reload();
     };
 };
