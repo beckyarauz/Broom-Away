@@ -67,14 +67,3 @@ var spells = [];
 var spellsBoss = [];
 var scoresArray = [];
 var speeds = [1.5, 1.75, 2, 2.5];
-
-var rightC = new Image();
-rightC.src = './images/c-right.png';
-var upC = new Image();
-upC.src = './images/c-up.png';
-var downC = new Image();
-downC.src = './images/c-down.png';
-var leftC = new Image();
-leftC.src = './images/c-left.png';
-var shoot = new Image();
-shoot.src = './images/magic-wand.png';

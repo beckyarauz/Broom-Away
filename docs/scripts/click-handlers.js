@@ -62,9 +62,8 @@ startButton.onclick = () => {
     soundStop();
     soundObjects["tone3"].play();
     now = new Date().getTime() / 1000;
-    intro.classList.remove('flex');
-    intro.classList.add('hide');
-    game.classList.add('flex');
+    $('#intro').toggle();
+    $('#game').toggle();
     $('#clear-cache').toggle();
     player = new Player(100, 100, 60, 55, house);
     gameBoard.start();

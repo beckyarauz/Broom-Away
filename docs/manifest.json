@@ -128,8 +128,28 @@
             "src": "./images/hp-bg4.png"
         },
         {
+            "id": "rightC",
+            "src": "./images/c-right.png"
+        },
+        {
+            "id": "leftC",
+            "src": "./images/c-left.png"
+        },
+        {
+            "id": "upC",
+            "src": "./images/c-up.png"
+        },
+        {
+            "id": "downC",
+            "src": "./images/c-down.png"
+        },
+        {
             "id": "spell",
             "src": "./images/spell.png"
+        },
+        {
+            "id": "shootBtn",
+            "src": "./images/magic-wand.png"
         },
         {
             "id": "boss-spell",

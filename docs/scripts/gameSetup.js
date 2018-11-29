@@ -5,6 +5,7 @@ rules1.toggle();
 rules2.toggle();
 rules3.toggle();
 scores.toggle();
+$('#game').toggle();
 
 if (!localStorage.getItem('n')) {
     localStorage.setItem('n', 1);
@@ -21,7 +22,6 @@ gameBoard = {
     gameTime: 0,
     pause: false,
     over: false,
-    // lastScore: localStorage.getItem('score-'+ plays),
     lastScore: lastScore,
     canvas: document.createElement("canvas"),
     start: function () {
@@ -41,11 +41,11 @@ gameBoard = {
         };
         ranBoss = Math.ceil(Math.random() * (4));
 
-        upDir = new Control(upC, 70, gameBoard.canvas.height - 150, 70, 70, 'up control');
-        rightDir = new Control(rightC, 110, gameBoard.canvas.height - 115, 70, 70, 'right control');
-        leftDir = new Control(leftC, 30, gameBoard.canvas.height - 115, 70, 70, 'left control');
-        downDir = new Control(downC, 70, gameBoard.canvas.height - 75, 70, 70, 'down control');
-        shootBtn = new Control(shoot, gameBoard.canvas.width - 100, gameBoard.canvas.height - 75, 50, 50, 'shoot control');
+        upDir = new Control(imageObjects['upC'], 70, gameBoard.canvas.height - 150, 70, 70, 'up control');
+        rightDir = new Control(imageObjects['rightC'], 110, gameBoard.canvas.height - 115, 70, 70, 'right control');
+        leftDir = new Control(imageObjects['leftC'], 30, gameBoard.canvas.height - 115, 70, 70, 'left control');
+        downDir = new Control(imageObjects['downC'], 70, gameBoard.canvas.height - 75, 70, 70, 'down control');
+        shootBtn = new Control(imageObjects['shootBtn'], gameBoard.canvas.width - 100, gameBoard.canvas.height - 75, 50, 50, 'shoot control');
         controls = [upDir, rightDir, leftDir, downDir, shootBtn]
     },
     clear: function () {
@@ -91,8 +91,6 @@ gameBoard = {
         ctx.fillStyle = 'white';
         ctx.font = '16px monospace';
         ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
-        ctx.font = '36px monospace';
-        ctx.fillText('Play Again?', (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70);
     },
     gameWon: () => {
         soundStop();
@@ -106,8 +104,6 @@ gameBoard = {
         ctx.fillStyle = 'white';
         ctx.font = '16px monospace';
         ctx.fillText('your final score is: ' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 20);
-        ctx.font = '36px monospace';
-        ctx.fillText('Play Again?' + gameBoard.points, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70);
     },
     drawLives: () => {
         space = 0;
@@ -149,12 +145,12 @@ reset = {
         ctx.drawImage(imageObjects["reset"], this.x, this.y, this.width, this.height);
     },
 };
-reload = {
-    width: 30,
-    height: 30,
-    x: 25,
-    y: 25,
-};
+// reload = {
+//     width: 30,
+//     height: 30,
+//     x: 25,
+//     y: 25,
+// };
 
 function compareNumbers(a, b) {
     return a - b;
@@ -339,8 +335,10 @@ function resetVariables() {
     space = 0;
     now = undefined;
     last = undefined;
+    background.x = 0;
     gameBoard.frames = 0;
     gameBoard.speed = -1;
+    background.speed = -1;
     gameBoard.points = 0;
     dementors = [];
     snitchs = [];
@@ -349,8 +347,18 @@ function resetVariables() {
     bossArr = [];
     spells = [];
     spellsBoss = [];
-    player = new Player(100, 100, 60, 55, house);
-    gameBoard.start();
+
+    if(gameBoard.over){
+        gameBoard.over = false;
+        $('#game').toggle();
+        $('#intro').toggle();
+        $('#intro').addClass('flex');
+        var name = prompt("What's your name?");
+        userName = name;
+        username.innerHTML = name;
+    } else {
+        player = new Player(100, 100, 60, 55, house);
+    }
 };
 
 gameBoard.canvas.addEventListener('touchstart', process_touchstart, false);
@@ -386,10 +394,13 @@ function process_touchstart(ev) {
     //reset touch
     if (isIntersect(mousePoint,reset, xReset, yReset)) {
         resetVariables();
+        if(gameBoard.over){
+            alert('its over!');
+        }
     };
     //reload touch
     if (isIntersectPlay(mousePoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70,100,36)) {
-        location.reload();
+        // location.reload();
     };
     //controls touch
     controls.forEach(control => {
@@ -432,7 +443,7 @@ gameBoard.canvas.onmousedown = (e) => {
     };
 
     if (isIntersectPlay(mouseClickPoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70,100,36)) {
-        location.reload();
+        // location.reload();
     };
 };
 
