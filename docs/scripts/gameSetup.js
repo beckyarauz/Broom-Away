@@ -425,10 +425,6 @@ gameBoard.canvas.onmousedown = (e) => {
     if (isIntersect(mouseClickPoint, reset, xReset1, yReset1)) {
         resetVariables();
     };
-
-    if (isIntersectPlay(mouseClickPoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70, 100, 36)) {
-        // location.reload();
-    };
 };
 
 function keyHandlers() {
