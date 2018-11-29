@@ -3,7 +3,6 @@ griffindor.onclick = () => {
     soundObjects["coinTone2"].play();
     document.body.style.backgroundImage = "url(" + imageObjects['b1'].src + ")";
     house = 'Griffindor';
-    console.log(house);
 
 };
 slytherin.onclick = () => {
@@ -11,21 +10,18 @@ slytherin.onclick = () => {
     soundObjects["coinTone2"].play();
     document.body.style.backgroundImage = "url(" + imageObjects['b2'].src + ")";
     house = 'Slytherin';
-    console.log(house);
 };
 ravenclaw.onclick = () => {
     soundStop();
     soundObjects["coinTone2"].play();
     document.body.style.backgroundImage = "url(" + imageObjects['b3'].src + ")";
     house = 'Ravenclaw';
-    console.log(house);
 };
 hufflepuff.onclick = () => {
     soundStop();
     soundObjects["coinTone2"].play();
     document.body.style.backgroundImage = "url(" + imageObjects['b4'].src + ")";
     house = 'Hufflepuff';
-    console.log(house);
 };
 
 //parents
