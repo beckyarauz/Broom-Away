@@ -66,7 +66,6 @@ function spellCrash() {
                     bossArr[0].hp -= 100;
                     gameBoard.points += 100;
                     if (bossArr[0].hp == 0) {
-                        finalBoss = undefined;
                         soundStop();
                         soundObjects['boss-kill'].play();
                         bossArr.splice(0, 1);

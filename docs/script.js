@@ -24,8 +24,10 @@ function updateGameArea() {
 
     if (gameBoard.over) {
         if (player.hp === 0 || player.lives === 0) {
+            finalBoss = undefined;
             gameBoard.gameOver();
         } else if (finalBoss.hp <= 0 && player.lives > 0) {
+            finalBoss = undefined;
             gameBoard.gameWon();
         };
         saveScore();
