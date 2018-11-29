@@ -13,15 +13,6 @@ function updateGameArea() {
 
     backgroundUpdate();
     reset.draw();
-    //when the player crashes with a dementor
-    dementorCrash();
-    //when a player crashes with a snitch
-    snitchCrash();
-    //when a player crashes with an owl
-    owlCrash();
-
-    spellCrash();
-
     if (gameBoard.over) {
         if (player.hp === 0 || player.lives === 0) {
             finalBoss = undefined;
@@ -33,6 +24,14 @@ function updateGameArea() {
         saveScore();
         return;
     };
+    //when the player crashes with a dementor
+    dementorCrash();
+    //when a player crashes with a snitch
+    snitchCrash();
+    //when a player crashes with an owl
+    owlCrash();
+
+    spellCrash();
 
     gameBoard.drawLives();
     drawControls();
