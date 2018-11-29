@@ -179,8 +179,6 @@ function scoreHandler() {
             })(),
         });
     };
-    console.log(scoresArray);
-
     var sortedScores = scoresArray.sort(compareNumbers).reverse();
 
     if (sortedScores.length > 10) {
@@ -337,8 +335,8 @@ function resetVariables() {
     last = undefined;
     background.x = 0;
     gameBoard.frames = 0;
-    gameBoard.speed = -1;
-    background.speed = -1;
+    gameBoard.speed = -3;
+    background.speed = gameBoard.speed;
     gameBoard.points = 0;
     dementors = [];
     snitchs = [];
@@ -397,10 +395,6 @@ function process_touchstart(ev) {
         if(gameBoard.over){
             alert('its over!');
         }
-    };
-    //reload touch
-    if (isIntersectPlay(mousePoint, (gameBoard.canvas.width / 2) - 110, (gameBoard.canvas.height / 2) + 70,100,36)) {
-        // location.reload();
     };
     //controls touch
     controls.forEach(control => {
